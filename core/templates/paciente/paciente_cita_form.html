@@ -1,0 +1,197 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es" class="h-100">
+<head>
+    <!-- ========================== -->
+    <!-- ⚙️ CONFIGURACIÓN BÁSICA -->
+    <!-- ========================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 🔁 Título dinámico: cambia según si el formulario edita o crea una cita -->
+    <title>{% if form.instance.pk %}Editar Cita{% else %}Nueva Cita{% endif %}</title>
+
+    <!-- ========================== -->
+    <!-- 🎨 ESTILOS Y FUENTES -->
+    <!-- ========================== -->
+
+    <!-- Bootstrap 5: base de estilos y diseño responsive -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Íconos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Fuente Inter (moderna y limpia para todo el sistema) -->
+    <link href="https://fonts.googleapis.com/com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    
+    <!-- Librería AOS (Animate On Scroll) para animaciones suaves -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Archivos CSS personalizados -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/base.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/paciente_cita_form.css' %}">
+    
+</head>
+
+<!-- ========================== -->
+<!-- 🧍‍♂️ CUERPO PRINCIPAL -->
+<!-- ========================== -->
+<body class="h-100 d-flex flex-column position-relative"> 
+
+    <!-- Fondo decorativo con efecto translúcido -->
+    <div class="bg-overlay-custom"></div>
+
+    <!-- ========================== -->
+    <!-- 🧭 BARRA DE NAVEGACIÓN -->
+    <!-- ========================== -->
+    <header>
+        <nav class="navbar navbar-expand-lg sticky-top py-3 navbar-dark system-navbar-paciente shadow-lg">
+            <div class="container-fluid container-xl">
+                
+                <!-- Logo del sistema (vuelve al listado de citas del paciente) -->
+                <a class="navbar-brand text-white fw-bold fs-4" href="{% url 'paciente_cita_list' %}">
+                    <i class="bi bi-person-heart me-2"></i> HealthCare Portal
+                </a>
+                
+                <!-- Botón tipo "hamburguesa" visible en dispositivos pequeños -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#pacienteNavbar" aria-controls="pacienteNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Contenedor del menú -->
+                <div class="collapse navbar-collapse" id="pacienteNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- Enlace activo (vista actual: Mis Citas) -->
+                        <li class="nav-item">
+                            <a class="nav-link active fw-bold" aria-current="page" href="{% url 'paciente_cita_list' %}">
+                                <i class="bi bi-calendar-check me-1"></i> Mis Citas
+                            </a>
+                        </li>
+                        <!-- Enlace al perfil del usuario -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-person-circle me-1"></i> Mi Perfil
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Sección lateral derecha del navbar -->
+                    <div class="d-flex align-items-center ms-auto">
+                        <!-- Muestra el nombre del usuario autenticado -->
+                        <span class="navbar-text text-white fw-semibold me-3 d-none d-lg-inline">
+                            Bienvenido/a, {{ request.user.username }}
+                        </span>
+
+                        <!-- Botón para cerrar sesión -->
+                        <form method="post" action="{% url 'logout' %}" class="d-flex">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-logout-innovative btn-sm shadow-sm">
+                                <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================== -->
+    <!-- 📋 CONTENIDO PRINCIPAL -->
+    <!-- ========================== -->
+    <main class="flex-shrink-0 flex-grow-1 d-flex justify-content-center align-items-center w-100 py-5">
+        
+        <!-- Tarjeta principal del formulario con animación AOS -->
+        <div class="card-innovadora" data-aos="zoom-in" data-aos-once="true"> 
+            
+            <!-- Encabezado con fondo azul marino -->
+            <div class="card-header-marine text-center">
+                <h3 class="mb-0 text-white">
+                    <i class="bi bi-calendar-plus me-2"></i> 
+                    <!-- Título dinámico según el contexto -->
+                    {% if form.instance.pk %}EDITAR CITA{% else %}AGENDAR NUEVA CITA{% endif %}
+                </h3>
+            </div>
+
+            <!-- Contenedor del formulario -->
+            <div class="form-container-pad">
+                
+                <!-- Formulario Django (método POST y sin validación HTML5) -->
+                <form method="post" novalidate class="d-grid gap-3">
+                    {% csrf_token %}
+                    
+                    <!-- Iteración sobre todos los campos del formulario -->
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <!-- Etiqueta del campo -->
+                            <label class="form-label">{{ field.label }}</label>
+                            
+                            <!-- Campo de entrada con clase personalizada -->
+                            {% render_field field class+="form-control form-control-styled" %}
+                            
+                            <!-- Mensaje de error si el campo no es válido -->
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <!-- Botón principal para enviar el formulario -->
+                    <div class="d-grid gap-3 mt-4">
+                        <button type="submit" class="btn btn-principal">
+                            {% if form.instance.pk %}Actualizar Cita{% else %}Crear Cita{% endif %}
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Botón de retorno al listado de citas -->
+                <div class="text-center mt-3">
+                    <a href="{% url 'paciente_cita_list' %}" class="btn btn-secundario btn-sm">
+                        <i class="bi bi-arrow-left"></i> Volver a Mis Citas
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- ========================== -->
+    <!-- ⚙️ PIE DE PÁGINA -->
+    <!-- ========================== -->
+    <footer class="footer mt-auto py-3 system-navbar-paciente footer-corporate-style" style="width: 100%;">
+        <div class="container text-center">
+            <p class="mb-0 small text-white-50">
+                <i class="bi bi-shield-lock-fill me-1"></i> © {{ now|date:"Y" }} HealthCare Portal.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ========================== -->
+    <!-- 🧠 SCRIPTS Y EFECTOS -->
+    <!-- ========================== -->
+
+    <!-- Bootstrap JS (funcionalidad interactiva de la interfaz) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Librería AOS (animaciones al hacer scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Inicializa las animaciones AOS con duración y retardo configurados
+        AOS.init({
+            duration: 900,  // Duración en milisegundos
+            once: true,     // Solo se ejecuta una vez
+            delay: 50       // Pequeño retardo antes de iniciar
+        });
+        
+        // 💧 (Opcional) Preparación del efecto ripple para el botón principal
+        document.querySelectorAll('.btn-principal').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // El CSS controla la animación, aquí solo se podría
+                // agregar lógica visual adicional si se desea.
+            });
+        });
+    </script>
+</body>
+</html>

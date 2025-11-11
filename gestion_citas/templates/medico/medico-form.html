@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+<!-- Hereda la plantilla base general del proyecto -->
+
+{% load static %}
+<!-- Permite usar la etiqueta 'static' para cargar archivos estáticos como CSS o imágenes -->
+
+{% block titulo %} 
+    <!-- Bloque donde se define el título dinámico de la página -->
+    {% if form.instance.pk %}
+        <!-- Si el formulario tiene una instancia (modo edición) -->
+        Editar Medico: {{ form.instance.usuario.first_name }} {{ form.instance.usuario.last_name }}
+    {% else %}
+        <!-- Si no hay instancia (modo creación) -->
+        Registrar Nuevo Médico
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<!-- Carga del nuevo CSS de formulario unificado -->
+<link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/medico-form.css' %}">
+<!-- Enlaza el archivo CSS personalizado para los formularios de médicos -->
+{% endblock %}
+
+{% block contenido %} 
+<!-- Inicio del bloque principal del contenido -->
+
+    <!-- Ajuste visual: se usa mt-3 en lugar de mt-5 para subir el contenedor -->
+    <div class="container mt-3 d-flex justify-content-center">
+        <!-- Contenedor principal centrado horizontalmente -->
+
+        <div class="card card-innovadora border-0">
+            <!-- Tarjeta con estilo personalizado y sin borde -->
+
+            <div class="card-header header-navy text-center">
+                <!-- Encabezado azul marino con texto centrado -->
+                <h2 class="card-title">
+                    <i class="bi bi-person-badge-fill me-2 text-contrast-blue"></i> 
+                    <!-- Ícono azul decorativo para el título -->
+                    {% if form.instance.pk %}
+                        <!-- Si el médico ya existe, muestra "Editar Médico" -->
+                        EDITAR MÉDICO
+                    {% else %}
+                        <!-- Si es un nuevo registro, muestra "Registrar Nuevo Médico" -->
+                        REGISTRAR NUEVO MÉDICO
+                    {% endif %}
+                </h2>
+            </div>
+            
+            <form method="post" class="needs-validation" novalidate>
+                <!-- Formulario con validación nativa de Bootstrap -->
+                {% csrf_token %}
+                <!-- Token de seguridad CSRF obligatorio en formularios Django -->
+                
+                <div class="card-body">
+                    <!-- Cuerpo de la tarjeta que contiene los campos del formulario -->
+                    
+                    <div class="row row-compact">
+                        <!-- Fila para organizar los campos en columnas -->
+                        
+                        {% for field in form %}
+                            <!-- Iteración de todos los campos del formulario -->
+                            
+                            <div class="col-12 
+                                {% if field.name == 'matricula' or field.name == 'telefono' %}
+                                    col-md-6 
+                                {% endif %}"
+                                 >
+                                <!-- Si el campo es 'matricula' o 'telefono', se divide la fila en 2 columnas -->
+                                
+                                <div class="form-group-elegant">
+                                    <!-- Contenedor visual estilizado de cada campo -->
+                                    <label for="{{ field.id_for_label }}" class="text-main-blue">
+                                        <!-- Etiqueta con texto azul principal -->
+                                        
+                                        <!-- Íconos condicionales según el tipo de campo -->
+                                        {% if field.name == 'usuario' %}
+                                            <i class="bi bi-person-circle me-1 text-contrast-blue"></i> 
+                                        {% elif field.name == 'matricula' %}
+                                            <i class="bi bi-credit-card-2-front-fill me-1 text-contrast-blue"></i> 
+                                        {% elif field.name == 'telefono' %}
+                                            <i class="bi bi-telephone-fill me-1 text-contrast-blue"></i> 
+                                        {% elif field.name == 'especialidades' %}
+                                            <i class="bi bi-journal-medical me-1 text-contrast-blue"></i> 
+                                        {% endif %}
+                                        {{ field.label }}
+                                        <!-- Muestra el texto de la etiqueta del campo -->
+                                    </label>
+                                    
+                                    {% if field.errors %}
+                                        <div class="errorlist">{{ field.errors }}</div>
+                                        <!-- Si el campo tiene errores, los muestra aquí -->
+                                    {% endif %}
+                                    
+                                    {% if field.field.widget.input_type == 'select' or field.field.widget.input_type == 'select multiple' %}
+                                        <!-- Si el campo es de tipo selección simple o múltiple -->
+                                        <select name="{{ field.name }}" id="{{ field.id_for_label }}"
+                                                class="form-select form-control-styled" 
+                                                {% if field.field.widget.input_type == 'select multiple' %}multiple{% endif %}
+                                                {% if field.field.required %}required{% endif %}>
+                                            <!-- Crea el elemento select con sus atributos y validaciones -->
+                                            
+                                            {% if field.name == 'usuario' %}
+                                                <!-- Opción inicial vacía para seleccionar usuario -->
+                                                <option value="" {% if not field.value %}selected{% endif %} disabled>
+                                                    -- Seleccionar Usuario --
+                                                </option>
+                                            {% endif %}
+                                            
+                                            {% for value, label in field.field.choices %}
+                                                <!-- Recorre todas las opciones del campo select -->
+                                                {% if value %} 
+                                                    <option value="{{ value }}" 
+                                                            {% if field.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                                        {{ label }}
+                                                    </option>
+                                                    <!-- Marca como seleccionada la opción actual -->
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <!-- Si el campo no es de tipo select, se renderiza como input -->
+                                        <input type="{{ field.field.widget.input_type|default:'text' }}" 
+                                                name="{{ field.name }}" 
+                                                id="{{ field.id_for_label }}" 
+                                                class="form-control-styled" 
+                                                placeholder="{{ field.field.widget.attrs.placeholder|default:'' }}"
+                                                value="{{ field.value|default_if_none:'' }}"
+                                                {% if field.field.required %}required{% endif %}>
+                                    {% endif %}
+                                    
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                        <!-- Muestra texto de ayuda si el campo lo tiene -->
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="footer-buttons d-flex justify-content-center gap-4">
+                        <!-- Sección de botones inferior -->
+                        <button type="submit" class="btn btn-principal">
+                            <i class="bi bi-save-fill me-1"></i> 
+                            <!-- Ícono de guardar -->
+                            {% if form.instance.pk %}
+                                <!-- Si el médico ya existe, botón muestra "Actualizar" -->
+                                Actualizar
+                            {% else %}
+                                <!-- Si es nuevo, muestra "Guardar" -->
+                                Guardar
+                            {% endif %}
+                        </button>
+                        
+                        <a href="{% url 'gestion_citas:medico-list' %}" class="btn btn-secundario">
+                            <i class="bi bi-x-circle-fill me-1"></i> 
+                            Cancelar
+                            <!-- Botón para volver al listado sin guardar -->
+                        </a>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+<!-- Script de validación de formulario con Bootstrap -->
+(function () {
+  'use strict'
+  var form = document.querySelector('form')
+  if (form) {
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  }
+})()
+// Valida que los campos requeridos estén completos antes de enviar el formulario
+</script>
+
+{% endblock %}
+<!-- Fin del bloque de contenido -->

@@ -1,0 +1,44 @@
+<!-- Extiende la plantilla base.html para reutilizar su estructura (cabecera, pie, etc.) -->
+{% extends "base.html" %}
+
+<!-- Carga la etiqueta 'static' para poder usar rutas a archivos estáticos (CSS, imágenes, etc.) -->
+{% load static %}
+
+<!-- Bloque que define el título de la página que aparecerá en la pestaña del navegador -->
+{% block titulo %} Dashboard de Administración {% endblock %}
+
+<!-- Bloque donde se cargan estilos adicionales específicos de esta página -->
+{% block extra_css %}
+    <!-- 1. Carga del archivo CSS personalizado con el diseño tipo neón y animaciones -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/panel_admin.css' %}">
+
+    <!-- 2. Estilo interno que reemplaza el fondo blanco de base.css por una imagen -->
+    <style>
+        body {
+            /* Sobrescribe el fondo claro del archivo base.css */
+            background: url("{% static 'img/fondo_clinica.avif' %}") no-repeat center center fixed !important;
+            /* Ajusta la imagen para que cubra toda la pantalla sin distorsionarse */
+            background-size: cover !important;
+        }
+    </style>
+{% endblock %}
+
+<!-- Bloque principal de contenido que se muestra en la página -->
+{% block contenido %}
+
+    <!-- Contenedor del contenido del dashboard, con padding para separar los elementos -->
+    <div class="dashboard-content py-5 px-3 p-lg-5">
+
+        <!-- Título principal del panel con ícono y clases responsivas para distintos tamaños -->
+        <h1 class="hud-title display-1 display-md-2 display-sm-3">
+            <i class="bi bi-heart-pulse-fill me-3"></i> HEALTHCARE SYSTEM
+        </h1>
+
+        <!-- Subtítulo con clases de fuente adaptables al tamaño de pantalla -->
+        <h2 class="hud-subtitle fs-2 fs-md-3 fs-sm-4">
+            — PANEL DE ADMINISTRACIÓN CENTRAL —
+        </h2>
+
+    </div>
+
+{% endblock %}

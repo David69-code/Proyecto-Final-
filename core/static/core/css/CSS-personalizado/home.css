@@ -1,0 +1,235 @@
+/* ---------------------- 1. VARIABLES Y ANIMACIÓN DE ENTRADA ---------------------- */
+
+/* Variables de Color Primarias de la Clínica (Consolidación) */
+:root {
+    --color-marine-dark: #0A192F; 
+    --color-primary-cian: #00BFFF;      /* Cian Vívido (Acento Secundario/Glow - si se mantiene en botones) */
+    --color-secondary-blue: #0077B6;
+    
+    --color-accent-green: #00A878;      /* Verde Esmeralda (Principal para neon y enfoque) */
+    
+    --color-text-white: #FFFFFF;        /* Blanco puro */
+    --color-text-subtle: #B0C4DE;       /* Gris azulado para descripción de tarjetas */
+    
+    /* Mantenemos la opacidad de la sombra profunda */
+    --color-shadow-deep: rgba(0, 168, 120, 0.5); 
+}
+
+@keyframes fadeInScaleUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ---------------------- 2. CONTENIDO PRINCIPAL Y LAYOUT ---------------------- */
+
+.landing-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem; 
+    text-align: center;
+    width: 100%;
+}
+
+/* ---------------------- 3. TÍTULOS (ESTILO CORPORATIVO CON GLOW SUTIL) ---------------------- */
+
+/* TÍTULO PRINCIPAL */
+.hud-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: var(--color-text-white); 
+    letter-spacing: 5px;
+    line-height: 1;
+    text-transform: uppercase;
+    font-size: clamp(3rem, 9vw, 5.5rem);
+
+    /* ⬇️ CAMBIO: Se reduce la intensidad del glow del texto principal */
+    text-shadow:
+        0 0 4px var(--color-text-white), /* Núcleo blanco un poco más suave */
+        0 0 10px var(--color-accent-green), /* Sombra media verde, reducida de 15px */
+        0 0 20px var(--color-shadow-deep);  /* Sombra profunda verde, reducida de 30px */
+
+    margin-bottom: 3.5rem; 
+    animation: fadeInScaleUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+    max-width: 1000px;
+}
+
+/* ---------------------- 4. TARJETAS DE ROL (GLASS NEUMORFISMO AVANZADO) ---------------------- */
+
+.role-card {
+    /* Diseño Glass Neumorfismo Estético */
+    background-color: rgba(10, 25, 47, 0.6); 
+    backdrop-filter: blur(18px); 
+    -webkit-backdrop-filter: blur(18px);
+    
+    /* 🟢 CAMBIO: Borde sutil ahora usa el verde esmeralda */
+    border: 1px solid rgba(0, 168, 120, 0.1); /* Verde con opacidad muy baja */
+    border-radius: 20px; /* Borde más estético */
+    color: var(--color-text-white);
+    
+    /* Sombra de profundidad elegante */
+    box-shadow: 
+        0 12px 40px 0 rgba(0, 0, 0, 0.4), 
+        /* 🟢 CAMBIO: El glow de la tarjeta ahora usa el verde */
+        0 0 25px rgba(0, 168, 120, 0.25);
+    
+    transition: transform 0.5s ease-out, box-shadow 0.5s ease-out, background-color 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 2.5rem 2rem; 
+    position: relative; 
+    overflow: hidden;
+
+    /* 🟢 ANIMACIÓN DE ENTRADA APLICADA */
+    animation: fadeInScaleUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+}
+
+/* 🟢 Retraso para el efecto escalonado (Asumiendo 3 tarjetas en el HTML: Médico, Paciente, Admin) */
+.col-lg-4:nth-child(1) .role-card {
+    animation-delay: 0.8s;
+}
+.col-lg-4:nth-child(2) .role-card {
+    animation-delay: 1.1s;
+}
+.col-lg-4:nth-child(3) .role-card {
+    animation-delay: 1.4s;
+}
+
+/* Elemento decorativo de esquina */
+.role-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 0 20px 0 20px;
+    /* 🟢 CAMBIO: El gradiente decorativo ahora usa el verde */
+    background: radial-gradient(circle at top right, rgba(0, 168, 120, 0.2) 0%, transparent 70%);
+    transition: all 0.5s;
+}
+
+.role-card:hover {
+    transform: translateY(-10px); /* Elevación elegante */
+    background-color: rgba(10, 25, 47, 0.95); /* Fondo casi opaco en hover */
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.6), 
+        /* 🟢 CAMBIO: Glow de hover de la tarjeta ahora usa el verde */
+        0 0 45px var(--color-accent-green); 
+}
+
+.role-card:hover::before {
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+}
+
+.card-icon {
+    font-size: 4rem; 
+    /* 🟢 CAMBIO: Color base del ícono ahora verde */
+    color: var(--color-accent-green);
+    /* 🟢 CAMBIO: Glow del ícono ahora verde */
+    text-shadow: 0 0 8px var(--color-accent-green), 0 0 15px rgba(0, 168, 120, 0.3); 
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.8rem; 
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--color-text-white);
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    color: var(--color-text-subtle);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+/* Botón con Degradado Premium */
+.btn-custom-neon {
+    /* 🟢 CAMBIO: Degradado ahora de verde esmeralda a cian */
+    background: linear-gradient(90deg, var(--color-accent-green) 0%, var(--color-primary-cian) 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 0.8rem 2.2rem;
+    border-radius: 8px;
+    /* 🟢 CAMBIO: Sombra del botón ahora con glow verde */
+    box-shadow: 0 4px 15px rgba(0, 168, 120, 0.6), inset 0 0 5px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+}
+
+.btn-custom-neon:hover {
+    /* 🟢 CAMBIO: Degradado de hover invertido */
+    background: linear-gradient(90deg, var(--color-primary-cian) 0%, var(--color-accent-green) 100%);
+    transform: scale(1.02);
+    /* 🟢 CAMBIO: Sombra de hover ahora más verde */
+    box-shadow: 0 6px 20px rgba(0, 168, 120, 0.9);
+    color: white;
+}
+
+
+/* ---------------------- 5. MEDIA QUERIES PARA RESPONSIVIDAD ---------------------- */
+
+@media (max-width: 992px) {
+    .hud-title {
+        font-size: 3.5rem;
+        letter-spacing: 4px;
+        margin-bottom: 3rem; 
+    }
+}
+
+@media (max-width: 768px) {
+    .hud-title {
+        font-size: 3rem;
+        letter-spacing: 3px;
+        margin-bottom: 2.5rem; 
+    }
+
+    .card-icon {
+        font-size: 3.5rem;
+    }
+
+    .card-title {
+        font-size: 1.6rem;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hud-title {
+        font-size: 2.2rem;
+        letter-spacing: 1px;
+        margin-bottom: 2rem; 
+    }
+
+    .landing-content {
+        padding: 2rem 0.5rem;
+    }
+
+    .col-12 {
+        width: 100%;
+        margin-bottom: 1.5rem !important;
+    }
+}

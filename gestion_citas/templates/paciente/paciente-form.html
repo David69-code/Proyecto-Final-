@@ -1,0 +1,118 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block titulo %} 
+    {% if form.instance.pk %} 
+        Editar Paciente: {{ form.instance.usuario.first_name }} {{ form.instance.usuario.last_name }}
+    {% else %} 
+        Registrar Nuevo Paciente
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/paciente-form.css' %}">
+{% endblock %}
+
+{% block contenido %} 
+<div class="container d-flex justify-content-center mt-3 py-4"> 
+    
+    <div class="card border-0 card-innovadora"> 
+        
+        <div class="card-header text-white text-center card-header-marine"> 
+            <h3 class="card-title mb-0 fw-bolder">
+                <i class="bi bi-person-badge me-2 text-contrast-blue"></i> 
+                {% if form.instance.pk %} EDITAR DATOS DE PACIENTE {% else %} REGISTRAR NUEVO PACIENTE {% endif %}
+            </h3>
+        </div>
+        
+        <div class="card-body form-container-pad"> 
+            <form method="post" class="needs-validation" novalidate> 
+                {% csrf_token %} 
+
+                {% if form.non_field_errors %} 
+                    <div class="alert alert-danger rounded-3 mb-4" role="alert">
+                        <h5 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i> Error de Validación</h5>
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                {% for field in form %} 
+                    <div class="mb-3">
+                        
+                        <label for="{{ field.id_for_label }}" class="form-label text-main-blue"> 
+                            {% if field.name == 'usuario' %} Usuario
+                            {% elif field.name == 'fecha_nacimiento' %} Fecha de Nacimiento
+                            {% elif field.name == 'telefono' %} Teléfono
+                            {% elif field.name == 'direccion' %} Dirección
+                            {% else %} {{ field.label }} {% endif %}
+                        </label>
+                        
+                        {% if field.errors %} 
+                            <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                        
+                        {% if field.field.widget.input_type == 'select' %}
+                            <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-select form-control-styled" {% if field.field.required %}required{% endif %}>
+                                <option value="" {% if not field.value %}selected{% endif %} disabled>--- Seleccionar ---</option>
+                                {% for value, label in field.field.choices %}
+                                    {% if value %} 
+                                        <option value="{{ value }}" {% if field.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>{{ label }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        
+                        {% elif field.field.widget.input_type == 'textarea' %}
+                            <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control form-control-styled" placeholder="{{ field.field.widget.attrs.placeholder|default:'Información adicional' }}" {% if field.field.required %}required{% endif %}>{{ field.value|default_if_none:'' }}</textarea>
+                        
+                        {% elif field.name == 'fecha_nacimiento' %} 
+                            <div class="input-group">
+                                <input type="date" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control form-control-styled" 
+                                    value="{{ field.value|date:'Y-m-d'|default_if_none:'' }}" 
+                                    {% if field.field.required %}required{% endif %} aria-label="Fecha de Nacimiento">
+                            </div>
+                        
+                        {% else %} 
+                            <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control form-control-styled" placeholder="{{ field.field.widget.attrs.placeholder|default:'' }}" 
+                                value="{{ field.value|default_if_none:'' }}" 
+                                {% if field.field.required %}required{% endif %}>
+                        {% endif %}
+
+                        {% if field.help_text %} 
+                            <div class="form-text mt-1 text-secondary small">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <div class="d-grid gap-3 d-flex justify-content-center mt-4 button-group-mobile"> 
+                    <button type="submit" class="btn btn-principal flex-grow-1 fw-bold">
+                        <i class="bi bi-save-fill me-1"></i> Guardar
+                    </button>
+                    
+                    <a href="{% url 'gestion_citas:paciente-list' %}" class="btn btn-secundario flex-grow-1 fw-bold">
+                        <i class="bi bi-x-circle me-1"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+(function () { 
+    'use strict'
+    var form = document.querySelector('form')
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) { 
+                event.preventDefault(); 
+                event.stopPropagation(); 
+            }
+            form.classList.add('was-validated')
+        }, false)
+    }
+})()
+</script>
+{% endblock %}

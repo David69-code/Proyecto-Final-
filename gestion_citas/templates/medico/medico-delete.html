@@ -1,0 +1,80 @@
+<!-- Hereda toda la estructura base desde el archivo base.html -->
+{% extends "base.html" %}
+
+<!-- Carga los archivos estáticos (CSS, imágenes, JS, etc.) -->
+{% load static %}
+
+<!-- Bloque del título que se mostrará en la pestaña del navegador -->
+{% block titulo %} Confirmar Eliminación de Médico {% endblock %}
+
+<!-- Bloque para incluir una hoja de estilos adicional específica de esta vista -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/medico-delete.css' %}">
+{% endblock %}
+
+<!-- Bloque principal del contenido de la página -->
+{% block contenido %}
+
+<!-- Contenedor principal centrado vertical y horizontalmente con padding -->
+<div class="container d-flex justify-content-center align-items-center py-4">
+
+    <!-- Tarjeta principal del cuadro de confirmación -->
+    <div class="card card-delete-elegant">
+
+        <!-- Encabezado de la tarjeta con color de alerta y texto de confirmación -->
+        <div class="card-header-danger-solid">
+            <!-- Ícono de advertencia -->
+            <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+            <span>Confirmar Eliminación</span>
+        </div>
+
+        <!-- Cuerpo de la tarjeta que contiene toda la información -->
+        <div class="card-body card-body-delete">
+            <!-- Ícono grande de usuario eliminado -->
+            <i class="bi bi-person-x-fill text-danger-vibrant mb-3" style="font-size: 3.5rem;"></i>
+
+            <!-- Título principal de advertencia -->
+            <h3>¿Estás seguro de eliminar este médico?</h3>
+
+            <!-- Mensaje de advertencia indicando que la acción es irreversible -->
+            <p>
+                Esta acción es <span class="text-danger fw-semibold">irreversible</span> 
+                y eliminará permanentemente al profesional:
+            </p>
+
+            <!-- Bloque de detalles del médico a eliminar -->
+            <div class="detail-block">
+                <!-- Nombre completo del médico obtenido desde el objeto -->
+                <p><span>Nombre:</span> {{ object.usuario.first_name }} {{ object.usuario.last_name }}</p>
+
+                <!-- Especialidades asociadas al médico -->
+                <p><span>Especialidad:</span>
+                    {% for esp in object.especialidades.all %}
+                        <!-- Muestra cada especialidad separada por comas -->
+                        {{ esp.nombre }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        <!-- Mensaje si el médico no tiene especialidades -->
+                        Sin especialidades registradas
+                    {% endfor %}
+                </p>
+            </div>
+
+            <!-- Formulario para confirmar la eliminación -->
+            <form method="post">
+                {% csrf_token %}
+                <!-- Botón para confirmar la eliminación definitiva -->
+                <button type="submit" class="btn btn-confirm-delete">
+                    <i class="bi bi-trash-fill me-2"></i> Eliminar Definitivamente
+                </button>
+
+                <!-- Botón para cancelar la acción y regresar a la lista de médicos -->
+                <a href="{% url 'gestion_citas:medico-list' %}" class="btn btn-outline-marine-action">
+                    <i class="bi bi-x-lg me-2"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Cierre del bloque de contenido -->
+{% endblock %}

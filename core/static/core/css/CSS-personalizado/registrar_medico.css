@@ -1,0 +1,199 @@
+/* ================================================================= */
+/* ---------------------- 1. PALETA Y VARIABLES (DISEÑO BLOQUES MODERNOS) ---------------------- */
+/* ================================================================= */
+:root {
+    /* Colores Principales (Azul/Verde Sofisticado) */
+    --color-primary-navy: #1C3F60;
+    /* Azul principal profundo para fondo de header */
+    --color-primary-dark: #142E46;
+    /* Azul más oscuro (para texto y base) */
+    --color-primary-light: #2D659A;
+
+    /* Color de Acento Moderno (VERDE ESMERALDA VIBRANTE) */
+    /* ✅ AJUSTE: Base de verde oscurecida */
+    --color-accent-green: #00A85A;
+    /* ✅ AJUSTE: Verde claro oscurecido */
+    --color-accent-green-light: #00C46C;
+
+    /* Fondo, Sombras y Peligro */
+    --color-bg-light: #F7F9FC;
+    /* Fondo muy claro para inputs */
+    --color-bg-white: #FFFFFF;
+    /* Fondo de la tarjeta */
+    --color-danger-subtle: #D32F2F;
+    /* Rojo de peligro limpio */
+    --color-border-subtle: #D9E2ED;
+    /* GRIS ACERO para líneas sutiles */
+
+    /* Variables de Sombra - Reducidas para un diseño más plano */
+    --shadow-subtle: 0 5px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    /* Variables generales */
+    --transition-speed: 0.35s;
+    --border-radius-xxl: 15px;
+    /* Ligeramente más pequeño para el estilo de bloque */
+}
+
+/* Definición de la Animación de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Colores de texto unificados */
+.text-deep-navy {
+    color: var(--color-primary-navy) !important;
+}
+
+.text-contrast-green {
+    color: var(--color-accent-green) !important;
+}
+
+/* ================================================================= */
+/* ---------------------- 2. ESTILO DE FORMULARIO PRINCIPAL ---------------------- */
+/* ================================================================= */
+
+/* Tarjeta Principal del Formulario (Diseño plano y estático) */
+.medico-register-card {
+    background-color: var(--color-bg-white);
+    border: 1px solid var(--color-border-subtle);
+    /* Borde suave */
+    border-radius: var(--border-radius-xxl);
+    /* 15px */
+    box-shadow: var(--shadow-subtle);
+    transition: all var(--transition-speed);
+    animation: fadeInUp 0.7s ease-out forwards;
+    opacity: 0;
+}
+
+.medico-register-card:hover {
+    box-shadow: var(--shadow-subtle);
+    /* Eliminar el cambio de sombra */
+    transform: none;
+    /* Eliminar la elevación en hover */
+}
+
+/* Header del Formulario (Bloque Sólido con Acento Verde) */
+.medico-register-header {
+    background: var(--color-primary-navy);
+    /* Color sólido */
+    color: white;
+    /* AJUSTE: Centrado y padding reducido */
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-xxl) var(--border-radius-xxl) 0 0;
+    text-align: center;
+    /* Centrar el encabezado */
+
+    /* Línea de acento verde esmeralda */
+    border-bottom: 5px solid var(--color-accent-green);
+}
+
+.medico-register-header h4 {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: none;
+    /* Eliminar sombra de texto */
+}
+
+/* Estilo de Inputs y Etiquetas */
+.form-label {
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    font-size: 0.95rem;
+    text-transform: capitalize;
+}
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+    /* Ligeramente más pequeño */
+    border: 1px solid var(--color-border-subtle) !important;
+    padding: 0.6rem 1rem;
+    /* Input más compacto */
+    color: var(--color-primary-dark);
+    transition: all 0.3s;
+    background-color: var(--color-bg-light) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    /* ✅ AJUSTE: Foco con nuevo color más oscuro (RGB 0, 168, 90) */
+    border-color: var(--color-accent-green) !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 168, 90, 0.35) !important;
+    background-color: var(--color-bg-white) !important;
+}
+
+/* Estilo para mensajes de éxito/peligro */
+.alert-success {
+    /* ✅ AJUSTE: Alerta success con nuevo color más oscuro (RGB 0, 168, 90) */
+    background-color: rgba(0, 168, 90, 0.1) !important;
+    color: var(--color-accent-green) !important;
+    border-color: var(--color-accent-green) !important;
+    font-weight: 600;
+}
+
+.alert-danger {
+    background-color: rgba(211, 47, 47, 0.1) !important;
+    color: var(--color-danger-subtle) !important;
+    border-color: var(--color-danger-subtle) !important;
+    font-weight: 600;
+}
+
+/* 6. BOTÓN DE ENVÍO (VERDE BRILLANTE - GUADAR) */
+.btn-main-action {
+    background: linear-gradient(135deg, var(--color-accent-green) 0%, var(--color-accent-green-light) 100%) !important;
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    /* ✅ AJUSTE: Sombra con nuevo color más oscuro (RGB 0, 168, 90) */
+    box-shadow: 0 8px 25px rgba(0, 168, 90, 0.4);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-main-action:hover {
+    background: linear-gradient(135deg, var(--color-accent-green-light) 0%, var(--color-accent-green) 100%) !important;
+    transform: translateY(-3px) scale(1.02);
+    /* ✅ AJUSTE: Sombra de hover con nuevo color más oscuro (RGB 0, 168, 90) */
+    box-shadow: 0 15px 40px rgba(0, 168, 90, 0.7);
+}
+
+/* BOTÓN SECUNDARIO (CANCELAR/VOLVER - Rojo Contorno) */
+.btn-secondary-action {
+    color: var(--color-danger-subtle) !important;
+    /* Rojo del peligro */
+    border: 2px solid var(--color-danger-subtle) !important;
+    /* Borde rojo */
+    background-color: var(--color-bg-white) !important;
+    /* Fondo blanco */
+    padding: 0.7rem 1.8rem;
+    /* Padding de botón reducido */
+    font-weight: 600;
+    border-radius: 50px;
+    /* ✅ AJUSTE: Redondeado total (Píldora) */
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-secondary-action:hover {
+    color: white !important;
+    /* Texto blanco en hover */
+    border-color: var(--color-danger-subtle) !important;
+    background-color: var(--color-danger-subtle) !important;
+    /* Fondo rojo sólido en hover */
+    /* Efecto más visible (escala y sombra fuerte) */
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.5);
+    transform: translateY(-2px) scale(1.02);
+}

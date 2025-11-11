@@ -1,0 +1,220 @@
+/* --- ESTILOS ESPECÍFICOS DE paciente_cita_form.html (FINAL COMPLETO) --- */
+
+/* ================================================================= */
+/* ---------------------- 1. PALETA Y VARIABLES (UNIFICACIÓN) ---------------------- */
+/* ================================================================= */
+:root {
+    /* Paleta Unificada de Diseño (Azul Profundo + Verde Esmeralda) */
+    --color-primary-navy: #021C3F; /* Azul Marino Súper Oscuro */
+    --color-primary-darker: #002C55; /* Azul oscuro para hover sutil */
+    --color-accent-green: #00A878; 
+    --color-accent-green-light: #00C890; 
+    
+    --color-danger-vibrant: #D32F2F; /* Rojo de peligro limpio */
+    --color-danger-hover: #C0392B; /* Rojo más oscuro para hover */
+    --color-bg-light: #F7F9FC; /* Fondo muy claro */
+    --color-border-subtle: #D9E2ED; /* Borde sutil */
+    
+    /* Diseño */
+    --border-radius-xxl: 20px; 
+    --transition-speed: 0.35s;
+    --max-width-form: 500px; 
+}
+
+/* Definición de la Animación de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Clases de utilidad */
+body {
+    background-color: var(--color-bg-light);
+    font-family: 'Inter', sans-serif;
+}
+
+/* -----------------------------------------------------------
+    ESTILOS del Navbar y Footer (Consistencia de la Vista)
+    ----------------------------------------------------------- */
+.system-navbar-paciente {
+    background-color: var(--color-primary-navy) !important;
+    border-bottom: 3px solid var(--color-accent-green);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.footer-corporate-style {
+    background-color: var(--color-primary-navy) !important;
+    border-top: 3px solid var(--color-accent-green);
+    color: rgba(255, 255, 255, 0.85); 
+    font-size: 0.95rem; 
+}
+
+/* Botón de Cerrar Sesión (Estilo Elegante) */
+.btn-logout-innovative {
+    background: linear-gradient(45deg, var(--color-primary-navy) 0%, #3a608d 100%) !important;
+    border: none; 
+    color: white !important; 
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 12px rgba(19, 55, 87, 0.5);
+}
+.btn-logout-innovative:hover {
+    background: linear-gradient(45deg, #3a608d 0%, var(--color-primary-navy) 100%) !important;
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(19, 55, 87, 0.8);
+    color: var(--color-accent-green) !important;
+}
+
+
+/* --- 3. Tarjeta de Formulario (FLOTANTE Y ELEGANTE) --- */
+
+.card-innovadora { 
+    border: none; 
+    background-color: white;
+    border-radius: var(--border-radius-xxl); 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); 
+    max-width: var(--max-width-form);
+    width: 95%; 
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden; 
+
+    /* APLICACIÓN DEL EFECTO DE ENTRADA */
+    animation: fadeInUp 0.8s ease-out forwards; 
+    opacity: 0; 
+}
+
+/* Efectos al pasar el ratón */
+.card-innovadora:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 35px rgba(28, 63, 96, 0.25); 
+}
+
+/* Header: MÁS GRUESO Y LLAMATIVO */
+.card-header-marine {
+    background-color: var(--color-primary-navy); 
+    color: white;
+    border-radius: var(--border-radius-xxl) var(--border-radius-xxl) 0 0 !important;
+    padding: 1.25rem 1.5rem; /* Más grueso */
+    border-bottom: 7px solid var(--color-accent-green); /* Línea más gruesa */
+    z-index: 2; 
+    position: relative;
+}
+
+.card-header-marine h3 {
+    font-weight: 900 !important; /* Más peso */
+    font-size: 1.5rem !important; /* Más grande */
+    letter-spacing: 0.8px; /* Más espaciado para llamar la atención */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Sombra más fuerte */
+}
+
+.form-container-pad { 
+    padding: 1.5rem 2rem; 
+}
+
+/* -----------------------------------------------------------
+    ESTILOS de Campos (Limpios y Reactivos)
+    ----------------------------------------------------------- */
+.form-label {
+    font-weight: 700;
+    color: var(--color-primary-navy); 
+    display: block;
+    margin-bottom: 0.3rem; 
+    font-size: 0.95rem;
+}
+
+.form-control-styled {
+    padding: 10px 14px; 
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 12px; 
+    background-color: #FAFAFA; 
+    box-sizing: border-box !important;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-control-styled:focus {
+    border-color: var(--color-accent-green) !important; 
+    box-shadow: 0 0 0 3px rgba(0, 168, 120, 0.4); 
+    outline: none;
+    background-color: white;
+}
+
+
+/* ---------------------- 4. BOTONES (DISEÑO Y ANIMACIÓN INNOVADORA) ---------------------- */
+
+/* Botón Principal (Guardar/Actualizar): Transición dramática (Verde -> Azul Marino) */
+.btn-principal {
+    background: linear-gradient(145deg, var(--color-accent-green), var(--color-accent-green-light));
+    border: none;
+    color: white;
+    padding: 0.9rem 2.5rem; 
+    font-weight: 900; 
+    font-size: 1.05rem;
+    border-radius: 50px;
+    
+    /* Sombra que simula el borde inferior levantado (3D) */
+    box-shadow: 0 4px 0 0 var(--color-primary-navy), 0 8px 18px rgba(0, 168, 120, 0.8);
+    
+    transition: all 0.15s ease-out; 
+    text-transform: uppercase;
+    
+    position: relative;
+    overflow: hidden;
+    /* Añadimos un sutil brillo pulsante al botón activo */
+    animation: buttonShine 1.5s infinite alternate; 
+}
+
+@keyframes buttonShine {
+    from { box-shadow: 0 5px 18px rgba(0, 168, 120, 0.7); }
+    to { box-shadow: 0 8px 25px rgba(0, 168, 120, 1.0); }
+}
+
+.btn-principal:hover {
+    /* FIX: El color de hover se vuelve AZUL MARINO corporativo */
+    background-color: var(--color-primary-navy) !important; 
+    transform: translateY(-4px); /* Elevación más intensa */
+    box-shadow: 0 15px 30px rgba(28, 63, 96, 0.9); /* Sombra AZUL MARINO viva */
+    /* Desactivar el brillo global en hover para hacer el hover azul más impactante */
+    animation: none; 
+}
+
+.btn-principal:active {
+    transform: translateY(2px); /* Se presiona */
+    box-shadow: 0 2px 0 0 var(--color-primary-navy), 0 5px 10px rgba(0, 168, 120, 0.5);
+}
+
+
+/* BOTÓN SECUNDARIO (Volver): Rojo Sólido y Delineado */
+.btn-secundario {
+    background-color: var(--color-danger-vibrant) !important; /* Base ROJO VIVO */
+    color: white !important; 
+    border: 2px solid var(--color-danger-vibrant) !important; 
+    padding: 0.7rem 1.8rem; 
+    font-weight: 800;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    transition: all var(--transition-speed) ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-secundario:hover {
+    background-color: var(--color-danger-hover) !important; /* Rojo ligeramente más oscuro */
+    color: white !important; 
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.6);
+    transform: translateY(-3px); /* Elevación más notoria */
+    border-color: var(--color-danger-hover) !important;
+}
+
+/* ---------------------- 5. ESTILOS ADICIONALES (ERRORES) ---------------------- */
+.text-danger {
+    color: var(--color-danger-vibrant) !important; 
+    font-weight: 600;
+}

@@ -1,0 +1,209 @@
+/* ============================================================= */
+/* 1. ANIMACIÓN DE ENTRADA                                       */
+/* ============================================================= */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================= */
+/* 2. COLORES Y UTILIDADES                                       */
+/* ============================================================= */
+.text-danger-vibrant { color: var(--color-danger-vibrant) !important; }
+.text-marine-deep { color: var(--color-marine-deep) !important; }
+.bg-danger-vibrant { background-color: var(--color-danger-vibrant) !important; }
+.bg-light-danger { background-color: #fdeeee !important; }
+
+/* ============================================================= */
+/* 3. TARJETA PRINCIPAL DE CONFIRMACIÓN                          */
+/* ============================================================= */
+.card-delete-elegant {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    max-width: 420px; /* Más pequeña y compacta */
+    width: 95%;
+    margin: 0 auto;
+    background: #fff;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease-out forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-delete-elegant:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(163, 21, 38, 0.3);
+}
+
+/* ============================================================= */
+/* 4. ENCABEZADO ROJO                                             */
+/* ============================================================= */
+.card-header-danger-solid {
+    background-color: var(--color-danger-vibrant);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 1rem 1.2rem;
+    border-radius: 16px 16px 0 0;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* ============================================================= */
+/* 5. CUERPO DEL DIÁLOGO                                          */
+/* ============================================================= */
+.card-body-delete {
+    padding: 1.5rem 2rem;
+    text-align: center;
+}
+
+.card-body-delete h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-marine-deep);
+    margin-bottom: 1rem;
+}
+
+.card-body-delete p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* ============================================================= */
+/* 6. BLOQUE DE DETALLES (DATOS DEL MÉDICO)                      */
+/* ============================================================= */
+.detail-block {
+    background-color: #fff7f7;
+    border: 1px solid rgba(176, 42, 55, 0.25);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    margin: 1.2rem 0 1.8rem 0;
+    text-align: left;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.detail-block p {
+    /* color: var(--color-marine-deep) !important; */
+    font-weight: 600;
+    margin: 0.3rem 0;
+}
+.detail-block span {
+    color: var(--color-marine-deep) !important;
+    font-weight: 600;
+    margin: 0.3rem 0;
+}
+
+/* ============================================================= */
+/* 7. BOTONES                                                    */
+/* ============================================================= */
+.card-body-delete form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+}
+
+.btn-confirm-delete {
+    background: var(--color-danger-vibrant);
+    color: #fff !important;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 5px 15px rgba(163, 21, 38, 0.5);
+    transition: all 0.3s ease;
+}
+.btn-confirm-delete:hover {
+    background: #b30019 !important;
+    box-shadow: 0 8px 20px rgba(163, 21, 38, 0.8);
+    transform: translateY(-2px);
+}
+
+.btn-outline-marine-action {
+    background: transparent;
+    color: var(--color-marine-deep);
+    border: 2px solid var(--color-marine-deep);
+    border-radius: 50px;
+    padding: 0.75rem 1.2rem;
+    font-weight: 700;
+    width: 100%;
+    max-width: 300px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+.btn-outline-marine-action:hover {
+    background: var(--color-marine-deep);
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+/* ============================================================= */
+/* 8. RESPONSIVE (Optimizaciones forzadas para Teléfono)                                                 */
+/* ============================================================= */
+@media (max-width: 576px) {
+    /* La tarjeta ocupa el 95% del ancho para dejar un pequeño margen */
+    .card-delete-elegant {
+    max-width: 95% !important; /* Forzamos el ancho máximo */
+    margin: 0 auto !important; /* Centramos */
+}
+    
+    /* Reducir el padding interno del cuerpo de la tarjeta */
+    .card-body-delete {
+    padding: 1rem !important; 
+}
+    
+    /* 🚨 AJUSTE CLAVE: FORZAR APILAMIENTO Y ANCHO 100% */
+    .card-body-delete form {
+        /* Fuerza a que los botones se apilen verticalmente, anulando cualquier d-flex horizontal */
+        display: flex !important; 
+        flex-direction: column !important; 
+        gap: 0.8rem !important;
+        width: 100% !important;
+    }
+
+    /* Ajuste clave para los botones: Ocupar el 100% y tamaño de fuente adecuado */
+    .btn-confirm-delete,
+    .btn-outline-marine-action {
+        max-width: 100% !important; /* Ocupa el 100% del ancho disponible */
+        width: 100% !important; /* Fuerza el 100% */
+        
+        /* Ajuste de fuente y padding para evitar desbordamiento del texto largo */
+        font-size: 0.8rem !important; /* Reducción de fuente (ej: SÍ, ELIMINAR PERMANENTEMENTE) */
+        padding: 0.7rem 0.8rem !important; 
+        white-space: normal !important; /* Permite que el texto largo se envuelva */
+        
+        /* Asegura que el contenido (icono y texto) esté centrado */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    /* Iconos dentro de los botones */
+    .btn-confirm-delete i,
+    .btn-outline-marine-action i {
+        font-size: 1rem;
+        margin-right: 0.5rem; 
+    }
+
+    /* Reducción de texto general para evitar desbordamiento */
+    .card-header-danger-solid {
+        font-size: 1.1rem;
+    }
+    .card-body-delete h3 {
+        font-size: 1.2rem;
+    }
+    .card-body-delete p {
+        font-size: 0.85rem;
+    }
+    .detail-block {
+        font-size: 0.85rem;
+    }
+}

@@ -1,0 +1,231 @@
+<!-- Carga la etiqueta "static" de Django, necesaria para usar archivos estáticos (CSS, JS, imágenes). -->
+{% load static %} 
+
+<!-- Define el tipo de documento HTML5 y el idioma español; 'h-100' permite que ocupe 100% de la altura. -->
+<!DOCTYPE html>
+<html lang="es" class="h-100">
+
+<head>
+    <!-- Define la codificación de caracteres para admitir acentos y caracteres especiales. -->
+    <meta charset="utf-8" />
+    <!-- Asegura que la página sea responsiva en dispositivos móviles (escala y ancho). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Título que se mostrará en la pestaña del navegador. -->
+    <title>Mi Perfil del Paciente - HealthCare System</title>
+
+    <!-- ====== CARGA DE LIBRERÍAS EXTERNAS ====== -->
+    <!-- Enlace a Bootstrap CSS (CDN) para estilos y layout responsivo. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <!-- Comentario: Bootstrap 5.3 como framework CSS. -->
+
+    <!-- Enlace a Bootstrap Icons para íconos usados en la UI. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Comentario: Íconos de Bootstrap (usados en botones, títulos, etc). -->
+
+    <!-- Enlace a Google Fonts (Inter) para la tipografía del sitio. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <!-- Comentario: Fuente tipográfica "Inter" para consistencia visual. -->
+    
+    <!-- Enlace a la hoja de estilos de AOS (Animate On Scroll). -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Comentario: Librería AOS para animaciones al hacer scroll. -->
+
+    <!-- ====== CARGA DE ESTILOS PROPIOS ====== -->
+    <!-- Enlace al CSS base personalizado del proyecto (variables, layout global). -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/base.css' %}">
+    <!-- Comentario: Archivo CSS base con estilos generales del sistema. -->
+
+    <!-- Enlace al CSS específico para la página de perfil del paciente. -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/paciente_perfil.css' %}"> 
+    <!-- Comentario: Estilos específicos para la página de perfil del paciente. -->
+    
+    <!-- NOTA: Usaremos el mismo CSS de Mi Agenda (Base) para el fondo, etc. -->
+</head>
+
+<body class="h-100 d-flex flex-column position-relative">
+    <!-- Comentario: El body usa flexbox para mantener el footer al final y ajustar el contenido. -->
+    <!-- Fondo superpuesto (overlay) para efecto visual sobre la imagen de fondo. -->
+    <div class="bg-overlay-custom"></div>
+    <!-- Comentario: Fondo superpuesto con transparencia, usado para efectos visuales. -->
+
+    <!-- ====== ENCABEZADO / BARRA DE NAVEGACIÓN ====== -->
+    <header>
+        <!-- Barra de navegación sticky con tema oscuro (data-bs-theme="dark"). -->
+        <nav class="navbar navbar-expand-lg sticky-top py-3" data-bs-theme="dark">
+            <!-- Comentario: Barra de navegación fija con tema oscuro. -->
+            <div class="container">
+                <!-- Marca / logo que enlaza al inicio del sitio -->
+                <a class="navbar-brand text-white fw-bold fs-4" href="{% url 'home' %}">
+                    <i class="bi bi-heart-pulse-fill me-2"></i> HealthCare System
+                </a>
+                <!-- Comentario: Logo o título del sistema que redirige al inicio. -->
+
+                <!-- Botón toggler para el menú colapsable en pantallas pequeñas -->
+                <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Comentario: Botón del menú para pantallas pequeñas (colapsable). -->
+
+                <!-- Contenedor colapsable del menú de navegación -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Comentario: Contenedor colapsable del menú principal. -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- Comentario: Enlaces de navegación principales. -->
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" href="{% url 'paciente_cita_list' %}">
+                                <i class="bi bi-calendar-check-fill me-1"></i> Mis Citas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Enlace al perfil del paciente (página actual). -->
+                            <a class="nav-link" href="{% url 'paciente_perfil' %}">
+                                <i class="bi bi-person-circle me-1"></i> Mi Perfil
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Sección derecha del navbar: nombre del paciente y botón de cerrar sesión -->
+                    <div class="d-flex align-items-center gap-2 ms-lg-auto">
+                        <!-- Comentario: Sección derecha del navbar: usuario y botón de cierre. -->
+                        <span class="navbar-text text-white fw-semibold">
+                            <i class="bi bi-person-circle"></i> {{ paciente.usuario.get_full_name|default:"Paciente" }}
+                        </span>
+                        
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-logout-innovative btn-sm shadow-sm">
+                                <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ====== CONTENIDO PRINCIPAL ====== -->
+    <main class="flex-shrink-0">
+        <!-- Comentario: Contenedor principal que no permite que el main empuje el footer. -->
+        <div class="container py-5 main-content-fade-in">
+            <!-- Comentario: Contenedor principal con padding vertical y animación de entrada. -->
+            
+            <div class="agenda-header-clean mb-5" data-aos="fade-up">
+                <!-- Comentario: Cabecera del perfil con animación AOS. -->
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between">
+                    <!-- Comentario: Organización responsiva del header (columna en móvil, fila en md+). -->
+                    <h1 class="h1-elegant-clean">
+                        <i class="bi bi-person-circle me-3 text-accent-green"></i> Mi Perfil
+                    </h1>
+                    
+                    <p class="header-date-elegant text-muted mt-2 mt-md-0">
+                        <!-- Comentario: Muestra la fecha actual con formato legible. -->
+                        Hoy: {{ now|date:"l"|capfirst }}, {{ now|date:"d" }} de {{ now|date:"F"|capfirst }} de {{ now|date:"Y, H:i" }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- ====== INFORMACIÓN DEL PERFIL ====== -->
+            <div class="row justify-content-center">
+                <!-- Comentario: Centra la tarjeta de perfil dentro de la página. -->
+                <div class="col-lg-8 col-md-10">
+                    <!-- Comentario: Define el ancho máximo de la tarjeta en pantallas grandes/medias. -->
+                    <div class="card shadow-lg border-0" data-aos="fade-up" data-aos-delay="200">
+                        <!-- Comentario: Tarjeta con sombra y animación AOS. -->
+                        <div class="card-body p-4 p-md-5">
+                            
+                            <!-- === SECCIÓN: Información Personal === -->
+                            <h2 class="card-title text-marine fw-bold mb-4 border-bottom pb-2">
+                                Información Personal
+                            </h2>
+
+                            <dl class="row profile-details-list">
+                                <!-- Comentario: Lista de detalles personales del paciente -->
+                                <div class="col-12 row g-0">
+                                    <!-- Comentario: Fila para Nombre Completo -->
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-person-badge me-2"></i> Nombre Completo:</dt>
+                                    <dd class="col-sm-8 fw-semibold text-break">{{ paciente.usuario.get_full_name|default:"N/A" }}</dd>
+                                </div>
+                                <div class="col-12 row g-0">
+                                    <!-- Comentario: Fila para Email -->
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-envelope me-2"></i> Email:</dt>
+                                    <dd class="col-sm-8 text-break">{{ paciente.usuario.email|default:"N/A" }}</dd>
+                                </div>
+                                <div class="col-12 row g-0">
+                                    <!-- Comentario: Fila para Teléfono -->
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-telephone me-2"></i> Teléfono:</dt>
+                                    <dd class="col-sm-8">{{ paciente.telefono|default:"(Sin registrar)" }}</dd>
+                                </div>
+                                <div class="col-12 row g-0">
+                                    <!-- Comentario: Fila para Fecha de Nacimiento -->
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-calendar-event me-2"></i> Fecha de Nacimiento:</dt>
+                                    <dd class="col-sm-8">{{ paciente.fecha_nacimiento|date:"d F Y"|default:"N/A" }}</dd>
+                                </div>
+                            </dl>
+
+                            <!-- === SECCIÓN: Información Médica === -->
+                            <h2 class="card-title text-marine fw-bold mb-4 mt-5 border-bottom pb-2">
+                                Información Médica
+                            </h2>
+
+                            <dl class="row profile-details-list">
+                                <!-- Comentario: Fila para Género -->
+                                <div class="col-12 row g-0">
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-person-bounding-box me-2"></i> Género:</dt>
+                                    <dd class="col-sm-8">{{ paciente.genero|default:"(No especificado)" }}</dd>
+                                </div>
+                                <!-- Comentario: Fila para Grupo Sanguíneo -->
+                                <div class="col-12 row g-0">
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-heart-pulse me-2"></i> Grupo Sanguíneo:</dt>
+                                    <dd class="col-sm-8">
+                                        <span class="badge bg-info text-dark fw-bold me-1 mb-1">{{ paciente.grupo_sanguineo|default:"No indicado" }}</span>
+                                    </dd>
+                                </div>
+                                <!-- Comentario: Fila para Alergias -->
+                                <div class="col-12 row g-0">
+                                    <dt class="col-sm-4 text-muted"><i class="bi bi-file-earmark-medical me-2"></i> Alergias:</dt>
+                                    <dd class="col-sm-8 text-wrap">{{ paciente.alergias|default:"(No registradas)" }}</dd>
+                                </div>
+                            </dl>
+
+                            <!-- Comentario: El botón de edición fue removido para mantener el perfil solo de visualización -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ====== PIE DE PÁGINA ====== -->
+    <footer class="footer mt-auto" data-bs-theme="dark">
+        <!-- Comentario: Footer fijo al final con tema oscuro -->
+        <div class="container text-center">
+            <p class="mb-0 small text-white-50">
+                <i class="bi bi-shield-lock-fill me-1"></i> © {{ now|date:"Y" }} HealthCare System. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ====== SCRIPTS ====== -->
+    <!-- Enlace a Bootstrap JS (bundle) para componentes interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JS para funcionalidad interactiva (collapse, modales, etc). -->
+    
+    <!-- Enlace a la librería AOS JS para animaciones on-scroll -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Librería AOS para las animaciones en scroll. -->
+
+    <script>
+        <!-- Inicialización de AOS con configuración personalizada -->
+        AOS.init({
+            duration: 900, 
+            once: true, 
+            delay: 150 
+        });
+        // Inicializa AOS con duración de animación, retraso y una sola ejecución.
+    </script>
+</body>
+</html>
