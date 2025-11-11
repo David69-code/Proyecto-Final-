@@ -19,22 +19,12 @@ from core.mixins import RolRequiredMixin # Mixin personalizado para restringir a
 # ===============================
 
 
-# views.py (PRUEBA DE DIAGNÓSTICO)
 
-# Antes:
-# class EspecialidadListView(RolRequiredMixin, ListView): 
 
-# Ahora (temporalmente):
-class EspecialidadListView(ListView): # Se elimina el Mixin
-    model = Especialidad 
-    # Ya no hay 'rol_permitido'
-    template_name = 'especialidad/especialidad-list.html' 
-    # ...
-
-# class EspecialidadListView(RolRequiredMixin, ListView): # Muestra la lista de especialidades disponibles
-#     model = Especialidad # Especifica el modelo que se listará
-#     rol_permitido = 'admin' # Solo los usuarios con rol 'admin' pueden acceder a esta vista
-#     template_name = 'especialidad/especialidad-list.html' # Plantilla HTML a utilizar
+class EspecialidadListView(RolRequiredMixin, ListView): # Muestra la lista de especialidades disponibles
+    model = Especialidad # Especifica el modelo que se listará
+    rol_permitido = 'admin' # Solo los usuarios con rol 'admin' pueden acceder a esta vista
+    template_name = 'especialidad/especialidad-list.html' # Plantilla HTML a utilizar
     context_object_name = 'especialidades' # Nombre de la variable que contendrá los datos en la plantilla
     
     def get_queryset(self):
