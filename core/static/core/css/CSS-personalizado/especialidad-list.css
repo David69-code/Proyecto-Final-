@@ -239,13 +239,12 @@
     }
 }
 
-
 /* =================================================================
-    5. ESTILOS INNOVADORES DEL CAMPO DE FILTRO (DISEÑO "WOW" NEUMORFICO)
+    5. ESTILOS INNOVADORES DEL CAMPO DE FILTRO (DISEÑO "WOW" NEUMÓRFICO)
     =================================================================
 */
 
-/* Contenedor principal que maneja la animación de entrada suave. */
+/* Contenedor principal que maneja la animación de entrada suave */
 .filter-container {
     animation: fadeInUp 0.7s ease-out forwards;
     animation-delay: 0.2s; /* Aparece un poco después del título */
@@ -253,59 +252,57 @@
     margin-bottom: 3rem; 
 }
 
-/* Contenedor que permite posicionar el icono y el input uno encima del otro */
+/* Contenedor que permite posicionar el ícono y el input uno encima del otro */
 .search-input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-/* Estilo del icono de búsqueda (Lupa) */
+/* Ícono de búsqueda (Lupa) — ahora centrado correctamente */
 .search-input-wrapper i.bi-search {
     position: absolute;
-    left: 20px; /* Posiciona el icono a la izquierda */
-    font-size: 1.4rem; /* Un poco más grande para más impacto */
+    left: 20px;                 /* Espaciado lateral */
+    top: 50%;                   /* Centrado verticalmente */
+    transform: translateY(-50%); /* Ajuste preciso */
+    font-size: 1.4rem;          /* Tamaño cómodo y visible */
     color: var(--color-primary-navy); 
     transition: color 0.3s ease, transform 0.3s ease;
+    pointer-events: none;       /* No bloquea clics sobre el input */
     z-index: 10;
 }
 
-
-/* Diseño del campo de texto (Input) - Neumorfismo Sutil + Cápsula */
+/* Diseño del campo de texto (Input) — estilo neumórfico */
 #filtro {
-    /* Quitamos el borde sólido y usamos sombra para el efecto neumórfico */
     border: none; 
     border-radius: 50px; 
-    padding: 0.9rem 1.5rem; /* Más padding para que se vea más robusto */
-    padding-left: 55px !important; /* Espacio extra para el icono */
+    padding: 0.9rem 1.5rem; /* Más padding para cuerpo visual */
+    padding-left: 55px !important; /* Espacio extra para el ícono */
     font-size: 1.1rem;
     color: var(--color-primary-navy);
     font-weight: 500;
     width: 100%; 
     background-color: var(--color-bg-light); /* Fondo suave */
     
-    /* Sombra compleja para el efecto "hundido" o Neumorfismo */
-    box-shadow: inset 2px 2px 5px var(--color-border-subtle), /* Sombra oscura (interno inferior) */
-                -2px -2px 5px var(--color-bg-white), /* Sombra clara (interno superior) */
-                0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra externa suave */
+    /* Sombra compleja para efecto "hundido" */
+    box-shadow: inset 2px 2px 5px var(--color-border-subtle),
+                -2px -2px 5px var(--color-bg-white),
+                0 6px 15px rgba(0, 0, 0, 0.1);
     transition: all var(--transition-speed);
 }
 
-/* Efecto al enfocar (Focus) - El efecto clave de innovación (Pulso de Salud) */
+/* Efecto al enfocar (Focus) — animación de pulso "latido" */
 #filtro:focus {
-    /* Quitamos las sombras internas para simular que "sale" un poco del hueco */
     box-shadow: 0 0 0 0.5px var(--color-accent-green), 
-                0 0 0 4px rgba(0, 168, 120, 0.2), /* El "glow" o "halo" */
-                0 6px 20px rgba(0, 0, 0, 0.15); 
+                0 0 0 4px rgba(0, 168, 120, 0.2),
+                0 6px 20px rgba(0, 0, 0, 0.15);
     outline: none;
     transform: translateY(-1px); /* Pequeña elevación */
-    
-    /* Aplica la animación de pulso que simula un latido de salud */
     animation: pulse-glow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-/* Efecto al enfocar: El icono se resalta y se mueve */
+/* Efecto al enfocar: el ícono cambia de color y mantiene centrado */
 #filtro:focus + i.bi-search {
     color: var(--color-accent-green);
-    transform: scale(1.1) translateY(-1px) rotateY(180deg); /* Animación más dramática */
+    transform: translateY(-50%) scale(1.1) rotateY(180deg); /* Mantiene centrado */
 }

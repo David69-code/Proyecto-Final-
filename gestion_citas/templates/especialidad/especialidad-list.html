@@ -1,16 +1,19 @@
 {% extends "base.html" %}
-
 {% load static %}
 
 {% block titulo %} Lista de Especialidades {% endblock %}
 
 {% block extra_css %}
+<!-- 🔗 Enlace al CSS personalizado de esta vista -->
+<link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/especialidad-list.css' %}">
 {% endblock %}
 
 {% block contenido %}
 
+<!-- Contenedor principal -->
 <div class="container py-4">
 
+    <!-- 🧭 Encabezado con título y botón -->
     <div
         class="header-dynamic-block d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
 
@@ -19,34 +22,40 @@
             Lista de Especialidades
         </h1>
 
+        <!-- Botón para crear una nueva especialidad -->
         <a href="{% url 'gestion_citas:especialidad-create' %}" class="btn btn-main-action rounded-pill mt-3 mt-md-0">
             <i class="bi bi-plus-circle-fill me-2"></i> Nueva Especialidad
         </a>
     </div>
 
+    <!-- 🔍 Contenedor del buscador -->
     <div class="row filter-container">
         <div class="col-12 col-md-8 col-lg-6 mx-auto">
             <div class="search-input-wrapper">
+                <!-- Campo de texto para filtrar -->
                 <input type="text" id="filtro" class="form-control"
                     placeholder="Buscar especialidades por nombre o ID...">
+                <!-- Ícono de lupa -->
                 <i class="bi bi-search"></i>
             </div>
         </div>
     </div>
 
+    <!-- 🩺 Listado de especialidades -->
     {% if especialidades %}
-
     <div class="row g-4">
         {% for e in especialidades %}
         <div class="col-12 col-sm-6 col-lg-4">
             <div class="card widget-consolidated h-100 filtro-item">
 
+                <!-- Encabezado de la tarjeta -->
                 <div class="widget-navy-header">
                     <h3 class="specialty-title-header text-truncate" title="{{ e.nombre }}">
                         {{ e.nombre }}
                     </h3>
                 </div>
 
+                <!-- Cuerpo de la tarjeta -->
                 <div class="widget-body-clean">
                     <i class="bi bi-patch-check-fill widget-main-icon"></i>
 
@@ -55,6 +64,7 @@
                     </span>
                 </div>
 
+                <!-- Pie con botones de acción -->
                 <div class="widget-footer-actions">
                     <a href="{% url 'gestion_citas:especialidad-update' pk=e.pk %}"
                         class="btn btn-outline-marine btn-action-wide">
@@ -70,6 +80,7 @@
         {% endfor %}
     </div>
 
+    <!-- Mensaje si no hay especialidades -->
     {% else %}
     <div class="alert alert-info text-center shadow-lg border-0 py-5" style="background-color: #e6f3ff;">
         <h4 class="alert-heading text-deep-navy">
@@ -86,18 +97,17 @@
     {% endif %}
 </div>
 
+<!-- 🧠 Script de filtrado dinámico -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const input = document.getElementById("filtro"); // Campo de texto del filtro
         const items = document.querySelectorAll(".filtro-item"); // Tarjetas a filtrar
 
         input.addEventListener("input", function () {
-            const texto = input.value.toLowerCase().trim(); // Texto ingresado en el buscador
-
-            // Recorre todas las tarjetas para ocultar o mostrar según la coincidencia
+            const texto = input.value.toLowerCase().trim(); // Texto ingresado
+            // Filtra las tarjetas en tiempo real
             items.forEach(item => {
-                const contenido = item.innerText.toLowerCase(); // Texto completo de la tarjeta
-                // Muestra si contiene el texto buscado, oculta si no coincide
+                const contenido = item.innerText.toLowerCase();
                 item.style.display = contenido.includes(texto) ? "" : "none";
             });
         });
