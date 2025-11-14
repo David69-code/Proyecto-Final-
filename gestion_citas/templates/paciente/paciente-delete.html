@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+<!-- Extiende la plantilla base.html, heredando su estructura y diseño general. -->
+
+{% load static %}
+<!-- Carga la etiqueta "static" para poder utilizar rutas a archivos estáticos como CSS o JS. -->
+
+{% block titulo %} Confirmar Eliminación de Paciente {% endblock %}
+<!-- Define el bloque de título que aparecerá en la pestaña del navegador. -->
+
+{% block extra_css %}
+<!-- Inicia el bloque para incluir estilos adicionales específicos de esta vista. -->
+<link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/medico-delete.css' %}">
+<!-- Vincula el archivo CSS personalizado con estilos específicos para la página de eliminación. -->
+{% endblock %}
+<!-- Cierre del bloque de estilos adicionales. -->
+
+{% block contenido %}
+<!-- Inicia el bloque principal del contenido de la página. -->
+<div class="container d-flex justify-content-center align-items-center py-4">
+    <!-- Contenedor principal centrado vertical y horizontalmente con padding. -->
+    <div class="card card-delete-elegant">
+        <!-- Tarjeta visual con estilo elegante para mostrar el cuadro de confirmación. -->
+        <div class="card-header-danger-solid">
+            <!-- Encabezado de la tarjeta con fondo rojo (alerta de peligro). -->
+            <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+            <!-- Ícono de advertencia (triángulo con signo de exclamación). -->
+            <span>Confirmar Eliminación</span>
+            <!-- Texto del encabezado. -->
+        </div>
+
+        <div class="card-body card-body-delete">
+            <!-- Cuerpo principal de la tarjeta donde se muestra la información del paciente. -->
+            <i class="bi bi-person-x-fill text-danger-vibrant mb-3" style="font-size: 3.5rem;"></i>
+            <!-- Ícono grande de persona tachada, indicando eliminación. -->
+
+            <h3>¿Estás seguro de eliminar este paciente?</h3>
+            <!-- Pregunta principal de confirmación. -->
+            <p>Esta acción es <span class="text-danger fw-semibold">irreversible</span> y eliminará permanentemente al paciente:</p>
+            <!-- Advertencia sobre la acción irreversible. -->
+
+            <div class="detail-block">
+                <!-- Bloque que muestra los detalles del paciente a eliminar. -->
+                <p><span>Nombre:</span> {{ object.usuario.first_name }} {{ object.usuario.last_name }}</p>
+                <!-- Muestra el nombre y apellido del paciente. -->
+                <p><span>Teléfono:</span> {{ object.telefono }}</p>
+                <!-- Muestra el teléfono del paciente. -->
+                <p><span>Dirección:</span> {{ object.direccion }}</p>
+                <!-- Muestra la dirección del paciente. -->
+            </div>
+
+            <form method="post">
+                <!-- Formulario de confirmación que envía la solicitud POST para eliminar al paciente. -->
+                {% csrf_token %}
+                <!-- Token CSRF de seguridad para proteger el formulario contra ataques. -->
+                <button type="submit" class="btn btn-confirm-delete">
+                    <!-- Botón principal que confirma la eliminación definitiva. -->
+                    <i class="bi bi-trash-fill me-2"></i> Eliminar Definitivamente
+                    <!-- Ícono de basura junto con el texto del botón. -->
+                </button>
+                <a href="{% url 'gestion_citas:paciente-list' %}" class="btn btn-outline-marine-action">
+                    <!-- Enlace estilo botón para cancelar y volver a la lista de pacientes. -->
+                    <i class="bi bi-x-lg me-2"></i> Cancelar
+                    <!-- Ícono de “X” y texto de cancelar. -->
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- Cierre del bloque de contenido principal. -->

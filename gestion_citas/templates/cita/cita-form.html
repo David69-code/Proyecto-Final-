@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+<!-- Hereda la plantilla principal 'base.html' que contiene la estructura general del sitio -->
+
+{% load static %}  
+<!-- Carga la etiqueta 'static' para poder enlazar archivos estáticos (como CSS o imágenes) -->
+
+{% block titulo %} 
+    <!-- Bloque que define el título de la página -->
+    {% if form.instance.pk %}
+        Editar Cita 
+        <!-- Si el formulario tiene una instancia existente, muestra 'Editar Cita' -->
+    {% else %}
+        Nueva Cita
+        <!-- Si no tiene instancia, significa que se está creando una nueva cita -->
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+    <!-- Bloque para cargar el CSS específico de esta vista -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/cita-form.css' %}">
+{% endblock %}
+
+{% block contenido %} 
+<!-- Bloque principal donde se mostrará el contenido de la página -->
+
+    <div class="container mt-1 d-flex justify-content-center"> 
+        <!-- Contenedor principal centrado horizontalmente -->
+        
+        <div class="card card-shadow-innovador">
+            <!-- Tarjeta con sombra personalizada para el diseño moderno del formulario -->
+            
+            <div class="card-header card-header-navy text-white text-center">
+                <!-- Encabezado de la tarjeta con fondo azul marino y texto blanco -->
+                <h2 class="card-title">
+                    <i class="bi bi-calendar-plus-fill me-2"></i>
+                    <!-- Ícono de calendario decorativo -->
+                    {% if form.instance.pk %}
+                        Editar Cita 
+                    {% else %}
+                        Registrar Nueva Cita
+                    {% endif %}
+                    <!-- Muestra texto dinámico según si se edita o crea una cita -->
+                </h2>
+            </div>
+            
+            <form method="post">
+                <!-- Formulario principal con método POST -->
+                <div class="card-body">
+                    <!-- Cuerpo de la tarjeta donde se colocan los campos -->
+                    {% csrf_token %}
+                    <!-- Token de seguridad obligatorio en formularios POST de Django -->
+                    
+                    {% for field in form %}
+                        <!-- Itera sobre cada campo del formulario -->
+                        <p>
+                            <!-- Contenedor individual por cada campo -->
+                            <label for="{{ field.id_for_label }}">
+                                <!-- Etiqueta del campo con ícono correspondiente según su tipo -->
+                                {% if field.name == 'paciente' %}
+                                    <i class="bi bi-person-fill text-contrast-blue"></i> Paciente
+                                {% elif field.name == 'medico' %}
+                                    <i class="bi bi-person-badge-fill text-contrast-blue"></i> Médico
+                                {% elif field.name == 'fecha_hora' %}
+                                    <i class="bi bi-calendar-date-fill text-contrast-blue"></i> Fecha y Hora
+                                {% elif field.name == 'motivo' %}
+                                    <i class="bi bi-chat-dots-fill text-contrast-blue"></i> Motivo
+                                {% elif field.name == 'estado' %}
+                                    <i class="bi bi-activity text-contrast-blue"></i> Estado
+                                {% endif %}
+                            </label>
+                            
+                            {% if field.name == 'paciente' or field.name == 'medico' %}
+                                <!-- Si el campo es 'paciente' o 'medico', se renderiza manualmente como un select -->
+                                {{ field.errors }}
+                                <select name="{{ field.name }}" id="{{ field.id_for_label }}"
+                                        class="form-select" 
+                                        {% if field.field.required %}required{% endif %}>
+                                    
+                                    <option value="" {% if not field.value %}selected{% endif %} disabled>
+                                        -- Seleccionar --
+                                        <!-- Opción por defecto inactiva -->
+                                    </option>
+                                    
+                                    {% for obj in field.field.queryset %}
+                                        <!-- Itera sobre la lista de opciones disponibles (pacientes o médicos) -->
+                                        <option value="{{ obj.pk }}" {% if field.value|stringformat:"s" == obj.pk|stringformat:"s" %}selected{% endif %}>
+                                            {% if field.name == 'medico' %}Dr(a). {% endif %}{{ obj.usuario.first_name }} {{ obj.usuario.last_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+
+                            {% elif field.name == 'motivo' %}
+                                <!-- Si el campo es 'motivo', se renderiza como un textarea personalizado -->
+                                {{ field.errors }}
+                                <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" 
+                                        class="form-control" rows="2" 
+                                        placeholder="Describa brevemente el motivo de la cita...">{{ field.value|default_if_none:'' }}</textarea>
+
+                            {% else %}
+                                <!-- Para los demás campos, se renderiza de forma normal -->
+                                {{ field.errors }}
+                                {{ field }} 
+                            {% endif %}
+                            
+                            {% if field.help_text %}
+                                <!-- Muestra texto de ayuda si el campo lo tiene -->
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                    
+                </div>
+                
+                <div class="card-footer d-flex justify-content-center gap-4 py-3 bg-light">
+                    <!-- Pie de la tarjeta con botones de acción -->
+                    <button type="submit" class="btn btn-principal">
+                        <!-- Botón para guardar los cambios -->
+                        <i class="bi bi-save-fill me-1"></i> Guardar
+                    </button>
+                    <a href="{% url 'gestion_citas:cita-list' %}" class="btn btn-secundario-outline">
+                        <!-- Botón para cancelar y volver al listado de citas -->
+                        <i class="bi bi-x-circle-fill me-1"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+<!-- Fin del bloque de contenido principal -->

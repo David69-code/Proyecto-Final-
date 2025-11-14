@@ -1,0 +1,210 @@
+/* ----------------------------------------------------------- */
+/* 📝 ESTILOS DE PERFIL - GLASSMORFISM NEÓN AZUL/ESMERALDA 💙💚 */
+/* ----------------------------------------------------------- */
+
+/* 1. COLORES Y VARIABLES */
+:root {
+    --color-dark-marine: #001f3f;
+    --color-card-bg: rgba(0, 51, 102, 0.35);
+    /* Fondo de tarjeta Glassmorphism */
+    --color-neon-blue: #00BFFF;
+    /* Color principal Neón (Cian) */
+    --color-emerald: #00E676;
+    /* Esmeralda para foco/acentos */
+    --color-neon-light: #4A90E2;
+    /* Azul claro para iconos */
+    --color-text-label: #FFFFFF;
+    /* Blanco puro para labels */
+    --color-input-bg: rgba(255, 255, 255, 0.08);
+    /* Fondo Input Glassmorphism */
+    --color-overlay-bg: rgba(0, 0, 0, 0.65);
+    /* Capa de Oscurecimiento */
+}
+
+/* 2. FONDO Y LAYOUT */
+body {
+    font-family: 'Inter', sans-serif;
+    /* La imagen de fondo se maneja con el <style> inyectado en el HTML */
+    color: white;
+    position: relative;
+}
+
+.backdrop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-overlay-bg);
+    z-index: 1;
+}
+
+/* 3. CARD DE PERFIL (Glassmorphism, Neón y Hover) */
+.registro-card {
+    background-color: var(--color-card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 2px solid rgba(0, 191, 255, 0.6);
+    border-radius: 1.25rem;
+
+    /* Sombra FUSIONADA */
+    box-shadow:
+        0 0 30px rgba(0, 191, 255, 0.5),
+        /* Azul */
+        0 0 15px rgba(0, 230, 118, 0.3);
+    /* Esmeralda */
+
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    /* Animación de entrada */
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: slideIn 1s ease-out 0.2s forwards;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover: Escala y Sombra FUSIONADA */
+.registro-card:hover {
+    transform: translateY(-7px) scale(1.01);
+    box-shadow:
+        0 0 50px rgba(0, 191, 255, 0.8),
+        0 0 20px rgba(0, 230, 118, 0.5);
+}
+
+/* 4. TÍTULOS Y ETIQUETAS */
+.registro-card h3 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: white;
+    text-shadow:
+        0 0 7px var(--color-neon-blue),
+        0 0 2px rgba(0, 230, 118, 0.3);
+    letter-spacing: 0.8px;
+}
+
+.form-label-custom {
+    font-size: 0.85rem;
+    /* Un poco más grande que el registro anterior */
+    font-weight: 600;
+    color: var(--color-text-label);
+    margin-bottom: 0.3rem !important;
+    /* Más espacio */
+    letter-spacing: 0.8px;
+    display: block;
+}
+
+/* 5. INPUTS Y SELECTS (El corazón del estilo) */
+.form-control,
+.form-select {
+    border-radius: 0.6rem !important;
+    padding: 0.7rem 0.8rem !important;
+    font-size: 0.95rem !important;
+    color: white;
+    background-color: var(--color-input-bg);
+    border: 1px solid rgba(74, 144, 226, 0.5);
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Foco Esmeralda */
+.form-control:focus,
+.form-select:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-emerald);
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
+}
+
+/* Icono de Input Group (parte izquierda) */
+.input-group-text {
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(74, 144, 226, 0.5);
+    border-right: none;
+    border-radius: 0.6rem 0 0 0.6rem !important;
+    color: var(--color-neon-light);
+    font-size: 1.1rem;
+    padding: 0.7rem 0.75rem;
+}
+
+/* Ajustes de borde para el input/select dentro del input-group */
+.input-group .form-control,
+.input-group .form-select {
+    /* Asegura que no haya doble borde y que la esquina derecha sea redonda */
+    border-left: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 0.6rem !important;
+    border-bottom-right-radius: 0.6rem !important;
+}
+
+/* Estilo para el input de tipo fecha (Calendario) */
+input[type="date"] {
+    color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%);
+    cursor: pointer;
+}
+
+input[type="date"]::-moz-calendar-picker-indicator {
+    filter: invert(100%);
+    cursor: pointer;
+}
+
+/* 6. BOTÓN DE ENVÍO (Degradado Azul a Esmeralda) */
+.btn-neon-solid {
+    background: linear-gradient(90deg, var(--color-neon-blue) 0%, var(--color-emerald) 100%);
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.8rem 1rem;
+    border-radius: 40px;
+    /* Estilo 'pill' */
+    box-shadow: 0 4px 15px rgba(0, 230, 118, 0.7);
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-neon-solid:hover {
+    background: linear-gradient(90deg, var(--color-emerald) 0%, var(--color-neon-blue) 100%);
+    transform: translateY(-3px);
+    box-shadow:
+        0 6px 20px rgba(0, 191, 255, 0.8),
+        0 0 15px rgba(0, 230, 118, 0.6);
+    color: white;
+}
+
+/* 7. AJUSTES FINOS y RESPONSIVIDAD */
+.helptext {
+    display: none;
+}
+
+.g-3 {
+    --bs-gutter-x: 1.5rem;
+    /* Aumento ligero de espaciado horizontal */
+    --bs-gutter-y: 1.5rem;
+    /* Aumento ligero de espaciado vertical */
+}
+
+@media (max-width: 768px) {
+    .g-3 {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: 1rem;
+    }
+
+    .registro-card {
+        padding: 1.5rem 1rem;
+    }
+}

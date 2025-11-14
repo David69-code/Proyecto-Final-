@@ -1,0 +1,245 @@
+{% load static %} 
+<!-- Carga la etiqueta "static" de Django, necesaria para enlazar archivos estáticos (CSS, imágenes, JS locales) -->
+
+<!DOCTYPE html>
+<html lang="es" class="h-100">
+<!-- Documento HTML5 en español, con clase h-100 para ocupar toda la altura de la ventana -->
+
+<head>
+    <meta charset="utf-8" />
+    <!-- Define la codificación de caracteres para evitar errores con tildes o eñes -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Hace que la página sea responsive en dispositivos móviles -->
+
+    <title>Mi Perfil - HealthCare System</title>
+    <!-- Título que aparece en la pestaña del navegador -->
+
+    <!-- Bootstrap CSS principal (desde CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <!-- Iconos de Bootstrap (para los íconos de persona, calendario, etc.) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- Fuente personalizada "Inter" desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    
+    <!-- Librería AOS (Animate On Scroll) para animaciones suaves al hacer scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Hojas de estilo personalizadas -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/base.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/medico_perfil.css' %}"> 
+</head>
+
+<body class="h-100 d-flex flex-column position-relative">
+<!-- Estructura principal del cuerpo:
+     - h-100: ocupa toda la altura
+     - d-flex flex-column: organiza en columna
+     - position-relative: permite superposición de capas como el overlay -->
+     
+    <div class="bg-overlay-custom"></div>
+    <!-- Capa de fondo decorativa semitransparente (definida en CSS) -->
+
+    <!-- ====================== ENCABEZADO / NAVBAR ====================== -->
+    <header>
+        <nav class="navbar navbar-expand-lg sticky-top py-3" data-bs-theme="dark">
+            <!-- Navbar expandible en pantallas grandes, fija al hacer scroll, con tema oscuro -->
+
+            <div class="container">
+                <!-- Contenedor centrado de Bootstrap -->
+
+                <a class="navbar-brand text-white fw-bold fs-4" href="{% url 'home' %}">
+                    <!-- Logo / Nombre del sistema que redirige al inicio -->
+                    <i class="bi bi-heart-pulse-fill me-2"></i> HealthCare System
+                </a>
+
+                <!-- Botón hamburguesa (visible en móviles) -->
+                <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Contenido del menú colapsable -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Lista de enlaces de navegación -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" href="{% url 'medico_agenda' %}">
+                                <i class="bi bi-calendar-check-fill me-1"></i> Mi Agenda
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom active" href="#">
+                                <i class="bi bi-person-circle me-1"></i> Mi Perfil
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Sección derecha: nombre del médico + botón de cerrar sesión -->
+                    <div class="d-flex align-items-center gap-2 ms-lg-auto">
+                        <!-- Muestra el nombre completo del médico autenticado -->
+                        <span class="navbar-text text-white fw-semibold">
+                            <i class="bi bi-person-circle"></i> Dr(a). {{ medico.usuario.get_full_name|default:"Usuario" }}
+                        </span>
+                        
+                        <!-- Formulario para cerrar sesión -->
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-logout-innovative btn-sm shadow-sm">
+                                <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ====================== CONTENIDO PRINCIPAL ====================== -->
+    <main class="flex-shrink-0">
+        <!-- flex-shrink-0 evita que el contenido se comprima si el footer crece -->
+
+        <div class="container py-5 main-content-fade-in">
+            <!-- Contenedor principal con padding vertical y animación de entrada -->
+
+            <!-- Encabezado del perfil -->
+            <div class="agenda-header-clean mb-5" data-aos="fade-up">
+                <!-- data-aos aplica una animación al hacer scroll -->
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between">
+                    <h1 class="h1-elegant-clean">
+                        <i class="bi bi-person-vcard-fill me-3 text-accent-green"></i> Mi Perfil
+                    </h1>
+                    
+                    <!-- Fecha y hora actual -->
+                    <p class="header-date-elegant text-muted mt-2 mt-md-0">
+                        Hoy: {{ now|date:"l"|capfirst }}, {{ now|date:"d" }} de {{ now|date:"F"|capfirst }} de {{ now|date:"Y, H:i" }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tarjeta con información del médico -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <!-- Tarjeta principal con sombra y animación -->
+                    <div class="card shadow-lg border-0 profile-card-glow" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-body p-4 p-md-5">
+                            
+                            <!-- Sección de información personal -->
+                            <h2 class="card-title text-marine fw-bold mb-4 border-bottom pb-2">
+                                Información Personal
+                            </h2>
+
+                            <dl class="profile-details-list">
+                                <!-- Listado descriptivo (<dt> título - <dd> valor) -->
+
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-person-badge me-2"></i> Nombre Completo:
+                                    </dt>
+                                    <dd class="col-sm-8 fw-semibold text-break">
+                                        {{ medico.usuario.get_full_name|default:"N/A" }}
+                                    </dd>
+                                </div>
+
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-envelope me-2"></i> Email:
+                                    </dt>
+                                    <dd class="col-sm-8 text-break">
+                                        {{ medico.usuario.email|default:"N/A" }}
+                                    </dd>
+                                </div>
+
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-telephone me-2"></i> Teléfono:
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        {{ medico.telefono|default:"(Sin registrar)" }}
+                                    </dd>
+                                </div>
+
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-calendar-event me-2"></i> Fecha de Creación:
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        {{ medico.usuario.date_joined|date:"d F Y"|default:"N/A" }}
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <!-- Sección de información profesional -->
+                            <h2 class="card-title text-marine fw-bold mb-4 mt-5 border-bottom pb-2">
+                                Información Profesional
+                            </h2>
+
+                            <dl class="profile-details-list">
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-hospital me-2"></i> Especialidad(es):
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        {% for esp in medico.especialidades.all %}
+                                            <span class="badge bg-info text-dark fw-bold me-1 mb-1">{{ esp.nombre }}</span>
+                                        {% empty %}
+                                            <span class="text-muted">(Sin especialidades asignadas)</span>
+                                        {% endfor %}
+                                    </dd>
+                                </div>
+
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-card-heading me-2"></i> Matrícula Profesional:
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        {{ medico.matricula|default:"(No disponible)" }}
+                                    </dd>
+                                </div>
+                                
+                                <div class="row g-0">
+                                    <dt class="col-sm-4 text-muted">
+                                        <i class="bi bi-geo-alt me-2"></i> Ubicación Clínica:
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        {{ medico.ubicacion|default:"(No definida)" }}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ====================== PIE DE PÁGINA ====================== -->
+    <footer class="footer mt-auto" data-bs-theme="dark">
+        <div class="container text-center">
+            <p class="mb-0 small text-white-50">
+                <i class="bi bi-shield-lock-fill me-1"></i> © {{ now|date:"Y" }} HealthCare System. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ====================== SCRIPTS ====================== -->
+
+    <!-- JS de Bootstrap (para funcionalidades dinámicas como el menú o modales) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    
+    <!-- Script de AOS (activación de animaciones al hacer scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 900,  // Duración de cada animación (en milisegundos)
+            once: true,     // Solo se ejecuta una vez por elemento
+            delay: 150      // Retraso antes de iniciar cada animación
+        });
+    </script>
+</body>
+</html>

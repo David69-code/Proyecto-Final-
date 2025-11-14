@@ -1,0 +1,111 @@
+<!-- Extiende la plantilla base.html para reutilizar su estructura general (cabecera, pie, etc.) -->
+{% extends 'base.html' %}
+
+<!-- Carga la etiqueta 'static' para poder usar archivos estáticos como CSS o imágenes -->
+{% load static %}
+
+<!-- Carga la librería 'widget_tweaks' para personalizar la apariencia de los campos del formulario -->
+{% load widget_tweaks %}
+
+<!-- Bloque de título que se mostrará en la pestaña del navegador -->
+{% block titulo %}Registrar Médico{% endblock %}
+
+<!-- Bloque donde se cargan hojas de estilo adicionales para esta vista -->
+{% block extra_css %}
+    <!-- Carga del nuevo archivo CSS personalizado para el formulario de registro de médico -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/registrar_medico.css' %}">
+{% endblock %}
+
+<!-- Bloque de contenido principal de la página -->
+{% block contenido %}
+    <!-- Contenedor principal con márgenes superior e inferior (padding vertical) -->
+    <div class="row justify-content-center pt-5 pb-5">
+        
+        <!-- Columna central donde se ubica el formulario, adaptable según el tamaño de pantalla -->
+        <!-- col-12: ocupa todo el ancho en pantallas pequeñas -->
+        <!-- col-md-8: ocupa 8/12 del ancho en pantallas medianas -->
+        <!-- col-lg-5: más compacta en pantallas grandes -->
+        <div class="col-12 col-md-8 col-lg-5">
+
+            <!-- Tarjeta principal que contiene todo el formulario -->
+            <!-- 'shadow-sm' agrega una sombra ligera -->
+            <div class="medico-register-card card shadow-sm">
+
+                <!-- Encabezado de la tarjeta con fondo sólido y color verde definido en el CSS -->
+                <!-- El centrado del texto se aplica mediante las reglas del archivo CSS -->
+                <div class="medico-register-header">
+                    <!-- Título principal con ícono y texto en negrita -->
+                    <h4 class="mb-2 fw-bold">
+                        <i class="bi bi-person-plus-fill me-2"></i> REGISTRAR NUEVO MÉDICO
+                    </h4>
+                </div>
+
+                <!-- Cuerpo principal del formulario dentro de la tarjeta -->
+                <!-- p-4/p-md-5 añade espacio interior (padding) adaptable a pantallas medianas -->
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Verifica si existen mensajes del sistema (éxito, error, etc.) -->
+                    {% if messages %}
+                        <!-- Contenedor de mensajes con margen inferior -->
+                        <div class="mb-4">
+                            <!-- Recorre cada mensaje que haya en la lista -->
+                            {% for message in messages %}
+                                <!-- Muestra una alerta con el estilo correspondiente a su tipo (success, error, etc.) -->
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <!-- Contenido del mensaje -->
+                                    {{ message }}
+                                    <!-- Botón para cerrar la alerta -->
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Formulario principal para registrar un nuevo médico -->
+                    <!-- 'method="post"' envía los datos por POST -->
+                    <!-- 'novalidate' desactiva la validación automática del navegador -->
+                    <form method="post" novalidate>
+                        <!-- Token de seguridad CSRF (obligatorio en formularios POST en Django) -->
+                        {% csrf_token %}
+
+                        <!-- Itera sobre todos los campos del formulario que vienen desde la vista -->
+                        {% for field in form %}
+                            <!-- Cada campo se envuelve en un div con margen inferior -->
+                            <div class="mb-3">
+                                <!-- Etiqueta del campo (label) enlazada con su ID -->
+                                <label class="form-label" for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                <!-- Campo del formulario renderizado con la clase Bootstrap 'form-control' -->
+                                {% render_field field class="form-control" %}
+
+                                <!-- Si el campo tiene errores, los muestra debajo en rojo -->
+                                {% if field.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ field.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <!-- Contenedor de botones con separación y centrado -->
+                        <div class="d-flex gap-3 justify-content-center mt-5">
+                            
+                            <!-- Botón principal: Guardar el nuevo médico (color verde) -->
+                            <button type="submit" class="btn btn-main-action fw-bold flex-grow-1">
+                                <i class="bi bi-save-fill me-2"></i> GUARDAR
+                            </button>
+
+                            <!-- Botón secundario: Cancelar y volver a la lista de médicos -->
+                            <a href="{% url 'gestion_citas:medico-list' %}"
+                                class="btn btn-secondary-action fw-bold flex-grow-1">
+                                <i class="bi bi-x-circle-fill me-2"></i> CANCELAR
+                            </a>
+                        </div>
+                    </form>
+                </div> <!-- Fin del cuerpo de la tarjeta -->
+            </div> <!-- Fin de la tarjeta principal -->
+        </div> <!-- Fin de la columna -->
+    </div> <!-- Fin del contenedor general -->
+{% endblock %}

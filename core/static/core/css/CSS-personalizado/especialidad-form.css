@@ -1,0 +1,175 @@
+/* ================================================================= */
+/* ---------------------- 1. PALETA Y VARIABLES (DISEÑO UNIFICADO) ---------------------- */
+/* ================================================================= */
+:root {
+    /* Variables principales basadas en tu diseño unificado */
+    --color-primary-navy: #1C3F60; 
+    --color-primary-light: #2D659A;
+    --color-accent-green: #00A878; /* Verde Esmeralda */
+    --color-danger-subtle: #D32F2F; 
+    --color-danger-vibrant: #A31526; /* Rojo vibrante para el texto de advertencia/error */
+    --color-bg-light: #F7F9FC; 
+    --color-bg-white: #FFFFFF;
+    --color-border-subtle: #D9E2ED; 
+    --color-grey-dark: #6c757d; /* Gris oscuro para las viñetas */
+    --border-radius-xxl: 20px;
+    
+    /* Variables de Diseño Flotante */
+    --shadow-subtle: 0 10px 30px rgba(28, 63, 96, 0.15); /* Sombra suave de elevación */
+}
+
+/* Definición de la Animación de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------------- 2. ESTILOS BASE Y CONTENEDOR ---------------------- */
+
+body { 
+    background-color: var(--color-bg-light); 
+}
+.text-deep-navy { color: var(--color-primary-navy) !important; }
+.text-accent-green { color: var(--color-accent-green) !important; }
+
+/* Tarjeta Contenedora del Formulario */
+.card-form-container {
+    border: none;
+    border-radius: var(--border-radius-xxl);
+    background-color: var(--color-bg-white);
+    max-width: 450px; 
+    width: 95%; 
+    overflow: hidden;
+    box-shadow: var(--shadow-subtle); 
+    
+    /* ANIMACIÓN DE ENTRADA */
+    animation: fadeInUp 0.7s ease-out forwards; 
+    opacity: 0; 
+    margin: auto; 
+}
+
+/* ---------------------- 3. ENCABEZADO Y TÍTULO ---------------------- */
+
+.card-header-marine {
+    background: linear-gradient(90deg, var(--color-primary-navy) 0%, var(--color-primary-light) 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-xxl) var(--border-radius-xxl) 0 0 !important;
+    border-bottom: 5px solid var(--color-accent-green); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.card-header-marine h3 {
+    font-weight: 800 !important;
+    font-size: 1.6rem !important; 
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0;
+}
+
+/* Nombre de la Especialidad en Rojo (Edición/Eliminación) */
+.title-specialty-name {
+    color: var(--color-accent-green) !important; /* Verde Esmeralda */
+    font-weight: 900 !important;
+    margin-left: 5px;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 0 5px rgba(0, 40, 80, 0.3);
+}
+
+
+
+/* ---------------------- 4. CAMPOS Y ETIQUETAS ---------------------- */
+
+.label-style {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary-dark);
+}
+
+.form-control-styled {
+    padding: 12px 15px; 
+    border: 2px solid var(--color-border-subtle);
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-control-styled:focus {
+    border-color: var(--color-primary-navy);
+    box-shadow: 0 0 0 4px rgba(0, 168, 120, 0.2); 
+    outline: none;
+}
+
+/* ---------------------- 5. ESTILOS DE ERROR (CORRECCIÓN DE COLOR) ---------------------- */
+
+/* Estilo para mensajes de error de validación del lado del cliente de Bootstrap */
+.invalid-feedback {
+    color: var(--color-danger-vibrant) !important; /* TEXTO ROJO */
+    font-weight: 600;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Estilo para la lista de errores de validación de Django */
+.errorlist {
+    /* Color del contenedor de lista, el cual dicta el color de la viñeta en muchos casos */
+    color: var(--color-grey-dark) !important; 
+    padding-left: 20px; 
+    margin-top: 0.5rem;
+}
+.errorlist li {
+    list-style-type: disc;
+    /* Forzamos el color del TEXTO del ítem a rojo */
+    color: var(--color-danger-vibrant) !important; 
+    font-weight: 600;
+}
+
+/* Fallback para navegadores modernos que soporten viñetas separadas */
+.errorlist li::marker {
+    color: var(--color-grey-dark) !important; /* VIÑETA GRIS */
+}
+
+
+/* ---------------------- 6. BOTONES ---------------------- */
+
+/* Botón Principal (Guardar) - Degradado Azul Profundo */
+.btn-principal {
+    background: linear-gradient(135deg, var(--color-primary-navy) 0%, var(--color-primary-light) 100%);
+    border: none;
+    color: white; 
+    padding: 0.8rem 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(28, 63, 96, 0.4);
+    text-transform: uppercase;
+}
+.btn-principal:hover {
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary-navy) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(28, 63, 96, 0.6);
+    color: white; 
+}
+
+/* BOTÓN CANCELAR (Outline de Peligro) */
+.btn-secundario {
+    background: none;
+    color: var(--color-danger-subtle); 
+    border: 2px solid var(--color-danger-subtle); 
+    padding: 0.8rem 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+.btn-secundario:hover {
+    background-color: var(--color-danger-subtle); 
+    color: white;
+    transform: translateY(-2px);
+}

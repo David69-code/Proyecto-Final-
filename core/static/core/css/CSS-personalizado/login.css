@@ -1,0 +1,176 @@
+/* ----------------------------------------------------------- */
+/* 🔑 ESTILOS DE LOGIN - GLASSMORFISM NEÓN AZUL/ESMERALDA 💙💚 */
+/* ----------------------------------------------------------- */
+
+/* 1. VARIABLES Y COLORES */
+:root {
+    --color-dark-marine: #001f3f;
+    --color-card-bg: rgba(0, 51, 102, 0.35);
+    /* Fondo Glassmorphism */
+    --color-neon-blue: #00BFFF;
+    /* Color principal Neón (Cian) */
+    --color-emerald: #00E676;
+    /* Color Esmeralda para acentos */
+    --color-text-light: #ffffff;
+    --color-input-bg: rgba(255, 255, 255, 0.1);
+    --color-overlay-bg: rgba(0, 0, 0, 0.65);
+    /* Más oscuro para mejor contraste */
+}
+
+/* 2. FONDO */
+body {
+    /* La URL de la imagen se manejará en el HTML/Django */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-color: var(--color-dark-marine);
+    color: var(--color-text-light);
+    font-family: 'Inter', sans-serif;
+}
+
+.backdrop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-overlay-bg);
+    z-index: 1;
+}
+
+/* 3. TARJETA DE LOGIN (Glassmorphism y Neón) */
+.login-card {
+    background-color: var(--color-card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid rgba(0, 191, 255, 0.6);
+
+    /* Sombra FUSIONADA Azul/Esmeralda */
+    box-shadow:
+        0 0 30px rgba(0, 191, 255, 0.5),
+        /* Azul */
+        0 0 15px rgba(0, 230, 118, 0.3);
+    /* Esmeralda */
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 2;
+}
+
+/* ✅ AJUSTE: Escala en Hover */
+.login-card:hover {
+    transform: translateY(-7px) scale(1.01);
+    /* Traslación y ligera escala */
+
+    /* Sombra FUSIONADA más intensa en hover */
+    box-shadow:
+        0 0 50px rgba(0, 191, 255, 0.8),
+        /* Azul intenso */
+        0 0 20px rgba(0, 230, 118, 0.5);
+    /* Esmeralda intensa */
+}
+
+/* 4. TÍTULO */
+.login-title,
+.login-card h3 {
+    color: var(--color-text-light);
+    /* Mejor usar la variable de blanco */
+    /* Sombra FUSIONADA */
+    text-shadow:
+        0 0 7px var(--color-neon-blue),
+        0 0 2px rgba(0, 230, 118, 0.3);
+    /* Sombra esmeralda sutil */
+}
+
+/* 5. INPUTS */
+.form-control,
+.input-group-text {
+    color: white;
+    background-color: var(--color-input-bg);
+    border: 1px solid rgba(74, 144, 226, 0.6);
+    transition: all 0.3s;
+}
+
+.input-group-text {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-neon-blue);
+    font-size: 1.3rem;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ✅ AJUSTE: Foco con color Esmeralda */
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: var(--color-emerald);
+    /* Borde Esmeralda */
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.8);
+    /* Sombra Esmeralda */
+}
+
+/* 6. BOTÓN */
+/* ✅ AJUSTE: Degradado Azul a Esmeralda */
+.btn-custom-neon {
+    background: linear-gradient(90deg, var(--color-neon-blue) 0%, var(--color-emerald) 100%);
+    border: none;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
+    /* Sombra Esmeralda */
+    transition: all 0.3s ease;
+}
+
+.btn-custom-neon:hover {
+    /* ✅ AJUSTE: Hover con Degradado Esmeralda a Azul y Sombra FUSIONADA */
+    background: linear-gradient(90deg, var(--color-emerald) 0%, var(--color-neon-blue) 100%);
+    transform: scale(1.05);
+    box-shadow:
+        0 0 30px rgba(0, 191, 255, 0.8),
+        /* Azul */
+        0 0 15px rgba(0, 230, 118, 0.6);
+    /* Esmeralda */
+}
+
+/* 7. ENLACES */
+.login-link {
+    color: var(--color-neon-blue);
+    text-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+/* ✅ AJUSTE: Color hover del enlace Esmeralda */
+.login-link:hover {
+    color: var(--color-emerald);
+    text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
+}
+
+/* 8. ANIMACIÓN */
+.fade-in-card {
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 9. RESPONSIVIDAD */
+@media (max-width: 576px) {
+
+    .login-title,
+    .login-card h3 {
+        font-size: 1.8rem;
+    }
+}
