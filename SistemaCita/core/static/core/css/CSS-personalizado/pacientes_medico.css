@@ -1,0 +1,297 @@
+/* * Asumiendo que las variables de color están definidas en base.css, 
+ * las definimos aquí como fallback si no se cargan o para claridad:
+ */
+:root {
+    --color-marine-deep: #021c3f; /* Azul Marino Oscuro */
+    --color-marine-base: #0a1f44;  /* Azul Marino Base */
+    --color-accent-green: #00a878; /* Verde Neón Acento */
+    --color-bg-white: #ffffff;
+    --border-radius-xxl: 1.5rem; /* 24px */
+}
+
+
+/* ===========================================
+    FONDO SUAVE DETRÁS DEL CONTENIDO
+    =========================================== */
+.bg-overlay-custom {
+    /* Manteniendo un fondo claro y profesional */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+/* ===========================================
+    ANIMACIÓN GENERAL DEL CONTENIDO
+    =========================================== */
+.main-content-fade-in {
+    animation: fadeSlide 0.7s ease-out;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================================
+    TÍTULO PRINCIPAL (MIS PACIENTES)
+    =========================================== */
+.h1-elegant-clean {
+    font-size: clamp(2rem, 5vw, 2.6rem); /* Responsive font size */
+    font-weight: 900;
+    color: var(--color-marine-deep);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ICONO CON BRILLO SUAVE */
+.h1-elegant-clean i {
+    font-size: clamp(2.5rem, 6vw, 3rem);
+    color: var(--color-accent-green);
+
+    /* 🔥 BRILLO SUAVIZADO */
+    filter: drop-shadow(0 0 3px rgba(0, 168, 120, 0.5))
+            drop-shadow(0 0 8px rgba(0, 168, 120, 0.3));
+    transition: filter 0.3s ease;
+}
+
+/* ===========================================
+    FECHA/HORA ESTILO AGENDA
+    =========================================== */
+.header-date-elegant {
+    font-size: 0.9rem !important; /* Ligeramente más pequeño */
+    font-weight: 600 !important;
+    color: var(--color-marine-base) !important;
+    padding: 0.5rem 1.2rem;
+    background-color: #f0f4f7;
+    border: 1px solid rgba(10, 31, 68, 0.1); /* Borde más sutil */
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-date-elegant:hover {
+    transform: translateY(-3px); /* Menos movimiento */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    color: var(--color-accent-green) !important;
+    background-color: #e5eef3;
+}
+
+/* ===========================================
+    LÍNEA DIVISORA ANIMADA ESTILO AGENDA
+    =========================================== */
+.section-divider {
+    height: 3px; /* Más sutil */
+    width: 100%;
+    margin-top: 10px;
+    background: linear-gradient(
+        90deg,
+        var(--color-marine-base) 0%,
+        var(--color-accent-green) 100%
+    );
+    border-radius: 20px;
+    animation: slideGradient 1.6s ease-out forwards;
+}
+
+@keyframes slideGradient {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+
+/* ============================================================
+   TARJETA GENERAL CON BRILLO VERDE DETRÁS (estilo EXACTO)
+   ============================================================ */
+.patient-card-hover {
+    position: relative;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 0;
+    overflow: hidden;
+
+    /* sombra suave */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    transition: all 0.25s ease;
+}
+
+/* === BRILLO VERDE RECTANGULAR REAL === */
+.patient-card-hover::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    border-radius: 22px;
+
+    /* AQUÍ EL VERDE PURO Y CLARO */
+    background: rgba(0, 255, 140, 0.55);
+
+    /* Difuminado grande alrededor */
+    filter: blur(45px);
+
+    opacity: 10;
+    z-index: -1;
+
+    transition: all 0.3s ease;
+}
+
+
+
+
+.patient-card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 28px 6px rgba(0, 150, 80, 0.35);
+}
+
+
+
+
+/* ============================================================
+   ENCABEZADO (igual al de la imagen)
+   ============================================================ */
+.patient-card-header {
+    background: #0d2b50; /* azul exacto */
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* ICONO CIRCULAR DEL HEADER */
+.patient-card-icon {
+    width: 48px;
+    height: 48px;
+    background: #1db45a; /* verde exacto */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.patient-card-icon i {
+    font-size: 1.7rem;
+    color: white;
+}
+
+.patient-card-header h5 {
+    color: white;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* ============================================================
+   CUERPO DE INFORMACIÓN (ESTILO DE LA FOTO)
+   ============================================================ */
+.patient-card-body {
+    padding: 20px 24px;
+    background: #ffffff;
+}
+
+/* BLOQUE DE INFORMACIÓN — estilo EXACTO */
+.patient-info-group {
+    background: #f7f7f7;
+    border-radius: 10px;
+    padding: 14px 14px;
+    margin-bottom: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-left: 4px solid #1db45a; /* barra verde a la izquierda */
+}
+
+/* Etiqueta del campo (especialidades, teléfono…) */
+.patient-info-label {
+    font-size: .88rem;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Valor a la derecha */
+.patient-info-value {
+    font-size: .88rem;
+    font-weight: 700;
+    color: #444;
+    text-align: right;
+}
+
+/* iconos verdes */
+.patient-info-label i {
+    color: #1db45a;
+}
+
+/* Quitar estilos bootstrap */
+.patient-card-hover .card {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+
+/* ===========================================
+    ALERTA DE "NO HAY PACIENTES"
+    =========================================== */
+.alert-custom {
+    border-left: 5px solid var(--color-accent-green);
+    background: rgba(0, 168, 120, 0.08); /* Fondo con el color de acento */
+    color: #0a3d2c;
+    border-radius: 10px !important;
+}
+
+/* ===========================================
+    BOTÓN DE LOGOUT
+    =========================================== */
+.btn-logout-innovative {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-logout-innovative:hover {
+    background: #00e09d; /* Verde acento */
+    color: var(--color-marine-deep);
+    border-color: #00e09d;
+}
+
+/* ===========================================
+    FOOTER
+    =========================================== */
+.footer {
+    background: #041833;
+    padding: 20px 0;
+    color: white;
+}
+
+/* ===========================================
+    RESPONSIVE
+    =========================================== */
+@media (max-width: 768px) {
+    .h1-elegant-clean {
+        font-size: 2rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .h1-elegant-clean i {
+        font-size: 2.5rem;
+        margin-bottom: 5px;
+    }
+
+    .header-date-elegant {
+        margin-top: 1rem !important;
+        font-size: 0.85rem !important;
+    }
+}

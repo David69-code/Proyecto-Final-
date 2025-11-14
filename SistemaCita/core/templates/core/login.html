@@ -1,0 +1,132 @@
+{% load static %}
+{% load widget_tweaks %}
+<!-- Carga de etiquetas de Django: 
+     'static' para manejar archivos estáticos y 
+     'widget_tweaks' para personalizar los campos de formulario en el template. -->
+
+<!DOCTYPE html>
+<html lang="es" class="h-100">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Iniciar Sesión - HealthCare System</title>
+
+    <!-- Bootstrap (hoja de estilos principal del framework) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" crossorigin="anonymous" />
+
+    <!-- Íconos de Bootstrap -->
+    <link rel="stylesheet" 
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    
+    <!-- Fuente principal del sitio (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" 
+          rel="stylesheet" />
+
+    <!-- Archivo CSS personalizado del login -->
+    <link rel="stylesheet" href="{% static 'core/css/CSS-personalizado/login.css' %}">
+
+    <!-- Estilos en línea para fondo e impresión de fuente -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Fuente general */
+            background: url("{% static 'img/fondo_clinica.avif' %}") 
+                        no-repeat center center fixed !important; /* Imagen de fondo */
+            background-size: cover !important; /* Ajuste completo */
+            color: white; /* Texto en color claro para contraste */
+        }
+    </style>
+</head>
+
+<body class="d-flex align-items-center justify-content-center min-vh-100 py-3 py-lg-4">
+    <!-- Cuerpo centrado vertical y horizontalmente con clases Bootstrap -->
+
+    <div class="backdrop-overlay"></div>
+    <!-- Capa semitransparente (opcional) que se usa para oscurecer el fondo -->
+
+    <div class="login-card mx-auto p-4 p-md-5 rounded-4 fade-in-card"
+         style="max-width: 450px; width: 90%;"> 
+        <!-- Contenedor principal del formulario de login, con estilos responsivos -->
+
+        <h3 class="text-center mb-3 display-6 fw-bold login-title">
+            <!-- Título principal del formulario -->
+            <i class="bi bi-shield-lock-fill me-2"></i> ACCESO SEGURO
+        </h3>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <!-- Protección CSRF obligatoria en formularios POST de Django -->
+
+            {% if form.non_field_errors %}
+            <!-- Muestra errores generales del formulario (por ejemplo, credenciales incorrectas) -->
+            <div class="alert alert-danger p-2 small mb-3" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <!-- Campo de usuario -->
+            <div class="mt-3 mb-3 mb-md-4">
+                <label for="{{ form.username.id_for_label }}" class="form-label small fw-semibold mb-1">
+                    Usuario
+                </label>
+
+                <div class="input-group">
+                    <!-- Ícono dentro del input -->
+                    <span class="input-group-text rounded-start-4">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+
+                    <!-- Campo de texto del usuario, renderizado con widget_tweaks -->
+                    {% render_field form.username class="form-control rounded-end-4" placeholder="Ingresa tu usuario" %}
+                </div>
+
+                {% if form.username.errors %}
+                <!-- Errores específicos del campo usuario -->
+                <div class="text-danger small mt-1">{{ form.username.errors|striptags }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Campo de contraseña -->
+            <div class="mb-3 mb-md-4">
+                <label for="{{ form.password.id_for_label }}" class="form-label small fw-semibold mb-1">
+                    Contraseña
+                </label>
+
+                <div class="input-group">
+                    <!-- Ícono de contraseña -->
+                    <span class="input-group-text rounded-start-4">
+                        <i class="bi bi-key-fill"></i>
+                    </span>
+
+                    <!-- Campo de entrada tipo password -->
+                    {% render_field form.password class="form-control rounded-end-4" placeholder="Ingresa tu contraseña" %}
+                </div>
+
+                {% if form.password.errors %}
+                <!-- Errores específicos del campo contraseña -->
+                <div class="text-danger small mt-1">{{ form.password.errors|striptags }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Botón de envío -->
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-custom-neon fw-bolder rounded-pill">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> INICIAR SESIÓN
+                </button>
+            </div>
+        </form>
+
+        <!-- Enlace para registro -->
+        <p class="text-center mt-3 mb-0 small">
+            ¿No tienes cuenta?
+            <a href="{% url 'registro' %}" class="text-decoration-none fw-bold login-link">
+                Regístrate aquí
+            </a>
+        </p>
+    </div>
+
+    <!-- Script de Bootstrap para interacción de componentes -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

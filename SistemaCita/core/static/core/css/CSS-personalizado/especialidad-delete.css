@@ -1,0 +1,168 @@
+/* ========================================================= */
+/* ---------------------- DEFINICIÓN DE ANIMACIÓN ---------------------- */
+/* ========================================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------------- 1. UTILIDADES Y PALETA ---------------------- */
+
+/* Fondo general (suave y simple) */
+body {
+    background-color: #F4F7F9;
+}
+
+/* Colores de texto utilizados en el HTML */
+.text-danger-vibrant, .text-red-deep-elegant { 
+    color: var(--color-danger-vibrant) !important; 
+}
+.text-marine-deep, .text-deep-navy { 
+    color: var(--color-marine-deep) !important; 
+}
+.bg-danger-vibrant { 
+    background-color: var(--color-danger-vibrant) !important; 
+}
+.bg-light-danger { 
+    background-color: #fcebeb !important; 
+} 
+
+/* Contenedor del Diálogo (tamaño decente, ni muy grande ni muy pequeño) */
+.dialog-container {
+    max-width: 400px; /* Tamaño decente, no un cuadrado gigante */
+    width: 95%; /* Asegura responsividad */
+}
+
+
+/* ---------------------- 2. TARJETA DE CONFIRMACIÓN (Diseño Cuadrado y Limpio) ---------------------- */
+
+.card-delete-elegant {
+    border: none; /* Sin borde exterior */
+    border-radius: 15px !important; /* Bordes ligeramente redondeados (más "cuadrado" que 25px) */
+    /* Sombra inicial sutil y sin resplandor rojo */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+    background: white; /* Fondo blanco sólido */
+    
+    /* Aumentamos la duración de la transición para un efecto de zoom suave */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+    
+    /* ANIMACIÓN DE ENTRADA */
+    opacity: 0; 
+    animation: fadeInUp 0.5s ease-out forwards; 
+    
+    margin: 5px auto 0 auto; /* Posicionamiento más arriba, cerca del tope */
+}
+
+.card-delete-elegant:hover {
+    /* MODIFICACIÓN CLAVE 1: Agrandarse (escala 1.05 = 5% más grande) */
+    transform: translateY(-8px) scale(1.05); 
+    
+    /* MODIFICACIÓN CLAVE 2: Resplandor rojo NEÓN (más grande y más brillante) */
+    box-shadow: 
+        0 15px 40px rgba(163, 21, 38, 0.4), /* Sombra principal debajo */
+        0 0 35px 8px rgba(163, 21, 38, 0.9), /* Resplandor principal intenso (Neón) */
+        0 0 60px 15px rgba(163, 21, 38, 0.4); /* Resplandor secundario, más difuso */
+}
+
+/* Header de la Tarjeta (Fondo sólido rojo y centrado) */
+.card-header-subtle-danger {
+    padding: 1.25rem; /* Padding un poco más compacto */
+    border-radius: 15px 15px 0 0 !important; /* Coincide con el redondeo de la tarjeta */
+    font-size: 1.6rem; /* Ajuste de tamaño de fuente */
+    font-weight: 700; /* Negrita */
+    background-color: var(--color-danger-vibrant); /* Rojo sólido */
+    color: white !important; 
+    
+    /* Línea roja oscura debajo del recuadro como sombreado/divisor */
+    border-bottom: 5px solid #8c1322; 
+    
+    /* Centrar horizontalmente el contenido del encabezado (icono + título) */
+    justify-content: center;
+}
+
+/* Estilos de elementos dentro del header (título y ícono) */
+.card-header-subtle-danger h5, 
+.card-header-subtle-danger .bi-x-octagon-fill {
+    font-weight: 700;
+    font-size: 1.8rem; /* Tamaño del ícono de advertencia */
+    margin-bottom: 0;
+    text-shadow: none; /* Sin sombra de texto */
+    color: white !important;
+}
+/* Asegura que no haya margen innecesario junto al ícono para el centrado */
+.card-header-subtle-danger .me-3 {
+    margin-right: 0.8rem !important;
+}
+
+
+/* Cuerpo de la tarjeta */
+.card-body-delete {
+    padding: 2rem 1.5rem; /* Padding más compacto */
+}
+
+/* Nombre de la especialidad (H2) */
+.card-body-delete h2 {
+    font-size: 2.2rem; /* Tamaño decente */
+    font-weight: 800; /* Negrita pronunciada */
+    text-shadow: none; /* Sin sombra de texto */
+}
+
+
+/* ---------------------- 3. BOTONES DE ACCIÓN (Más Limpios y Decentes) ---------------------- */
+
+/* Botón Principal (Eliminar - .red-deep-elegant) */
+.red-deep-elegant { 
+    background: var(--color-danger-vibrant) !important;
+    color: white !important;
+    border: none;
+    padding: 0.8rem 1.8rem; /* Relleno decente */
+    font-weight: 600; /* Menos negrita que antes */
+    border-radius: 50px !important;
+    box-shadow: 0 4px 15px rgba(163, 21, 38, 0.4); /* Sombra más sutil */
+    transition: all 0.2s ease-out; 
+    text-transform: uppercase;
+}
+.red-deep-elegant:hover {
+    background: #c0001a !important; 
+    transform: translateY(-2px); /* Movimiento sutil */
+    box-shadow: 0 6px 20px rgba(163, 21, 38, 0.6); /* Sombra un poco más visible en hover */
+}
+.red-deep-elegant:active {
+    transform: translateY(0px) scale(0.99); /* Efecto de "clic" sutil */
+    box-shadow: 0 3px 10px rgba(163, 21, 38, 0.3);
+}
+
+/* Botón Secundario (Cancelar - .btn-outline-marine) */
+.btn-outline-marine { 
+    background: none;
+    color: var(--color-marine-deep) !important;
+    border: 2px solid var(--color-marine-deep) !important; 
+    padding: 0.8rem 1.5rem; 
+    font-weight: 600;
+    border-radius: 50px !important;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+}
+.btn-outline-marine:hover {
+    background-color: var(--color-marine-deep) !important;
+    color: white !important;
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 40, 80, 0.2);
+}
+
+/* Ancho completo para los botones */
+.btn-delete-full-width {
+    width: 100%;
+}

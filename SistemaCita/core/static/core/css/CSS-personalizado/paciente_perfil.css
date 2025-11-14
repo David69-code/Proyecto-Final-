@@ -1,0 +1,345 @@
+/* --- ESTILOS ESPECÍFICOS PARA EL PERFIL DEL PACIENTE (ULTRA-ESTÉTICO) --- */
+
+/* 1. Definición de colores y variables UNIFICADAS */
+:root {
+    /* Variables de base tomadas de agenda_medico.css */
+    --color-marine-deep: #021C3F;       /* Azul Marino Oscuro */
+    --color-marine-base: #133757;       /* Azul marino base */
+    --color-accent-green: #00A878;      /* Verde Esmeralda (Acento principal) */
+    --color-bg-light: #FBFDFF;          /* Fondo de la Tarjeta y Body */
+    --color-bg-white: #FFFFFF;          
+    --color-marine-text: #191919;       /* Color de texto principal */
+    --color-text-muted: #555;           /* Color de texto secundario/etiquetas */
+    --color-border-subtle: #D9E2ED;
+    --color-cian-action: #1E90FF;       /* Azul Rey (Para botones de acción/badges) */
+    --transition-speed: 0.35s;
+    --border-radius-xl: 16px;
+}
+
+/* ---------------------- Animaciones (Claves para la estética) ---------------------- */
+
+@keyframes drawLine {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulso CIAN para el botón del paciente */
+@keyframes shadowPulseCyan {
+    0% { box-shadow: 0 0 0 0 rgba(30, 144, 255, 0.6); } /* Azul Rey */
+    70% { box-shadow: 0 0 0 10px rgba(30, 144, 255, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(30, 144, 255, 0); }
+}
+
+/* Aplicar la animación al contenido principal para un efecto de carga inicial elegante */
+.main-content-fade-in {
+    animation: fadeInSlide 1.2s ease-out forwards;
+    opacity: 0;
+}
+
+/* ---------------------- 2. Header (COMPACTO) ---------------------- */
+
+.agenda-header-clean {
+    border-bottom: none;
+    padding-bottom: 25px;
+    margin-bottom: 2rem !important; 
+    position: relative;
+}
+
+/* Línea degradada bajo el título */
+.agenda-header-clean::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    /* Degradado de Azul a Verde Esmeralda */
+    background: linear-gradient(to right,
+                var(--color-marine-base) 0%,
+                var(--color-marine-base) 30%,
+                var(--color-accent-green) 70%,
+                var(--color-accent-green) 100%);
+    border-radius: 1.5px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: drawLine 1s ease-out 0.5s forwards;
+}
+
+.h1-elegant-clean {
+    font-weight: 900;
+    color: var(--color-marine-deep);
+    font-size: 3.2rem; 
+    letter-spacing: -1.5px;
+    margin-bottom: 0;
+}
+
+/* Ícono del Título: Verde Esmeralda y animado */
+.h1-elegant-clean i {
+    color: var(--color-accent-green) !important;
+    text-shadow: 1px 1px 5px rgba(0, 168, 120, 0.6);
+    transition: transform 0.3s ease-in-out;
+}
+
+.h1-elegant-clean i:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+/* Diseño de la Fecha (Badge Flotante Animado) */
+.header-date-elegant {
+    font-size: 0.95rem; 
+    font-weight: 700;
+    color: var(--color-marine-deep) !important;
+    padding: 0.4rem 1rem;
+    background-color: #f0f4f7;
+    border: 2px solid var(--color-marine-base);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-date-elegant:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    color: var(--color-accent-green) !important;
+    background-color: #e5eef3;
+}
+
+
+/* ---------------------- 3. Tarjeta de Perfil (ESTÉTICA WOW) ---------------------- */
+
+.card {
+    border-radius: var(--border-radius-xl); 
+    background-color: var(--color-bg-white); 
+    border: 1px solid var(--color-border-subtle); 
+    
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Sombra inicial fuerte */
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+    position: relative; 
+}
+
+/* EFECTO WOW: Reflejo de luz que se desliza sobre la tarjeta al pasar el ratón */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%; 
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%); 
+    transform: skewX(-20deg);
+    pointer-events: none;
+    transition: transform 0.6s ease-in-out;
+}
+
+.card:hover::before {
+    transform: skewX(-20deg) translateX(250%); /* Deslizamiento más largo y rápido */
+}
+
+
+/* Hover de tarjeta general: Más pronunciado */
+.card:hover {
+    transform: translateY(-15px) scale(1.008); /* ELEVACIÓN MÁS ALTA */
+    box-shadow: 0 50px 100px rgba(18, 55, 87, 0.7); /* SOMBRA ENORME */
+}
+
+.card-body {
+    padding: 2rem 3rem; /* ULTRA COMPACTO */
+}
+
+/* Título de Sección dentro de la Tarjeta */
+.card-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700; 
+    color: var(--color-marine-deep); 
+    letter-spacing: 0.5px;
+    font-size: 1.5rem; 
+    
+    border-bottom: 2px solid var(--color-accent-green) !important;
+    padding-bottom: 8px;
+    margin-bottom: 1.5rem !important; /* MÁS COMPACTO */
+}
+
+
+/* ---------------------- 4. Estilo de la Lista de Detalles (Deslizamiento Sutil) ---------------------- */
+
+.profile-details-list {
+    margin-bottom: 1rem; 
+    padding: 0;
+}
+
+/* Estilo de la fila para la animación escalonada */
+.profile-details-list .row {
+    transition: all 0.4s ease; 
+    border-left: 5px solid transparent; 
+    margin-left: -5px; 
+    opacity: 1; 
+}
+
+.profile-details-list dt,
+.profile-details-list dd {
+    font-size: 0.9rem; 
+    padding: 0.5rem 0; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
+}
+
+/* Etiquetas e Íconos */
+.profile-details-list dt {
+    font-weight: 600; 
+    color: var(--color-marine-base) !important;
+    text-align: left; 
+    padding-left: 1rem; 
+    display: flex; 
+    align-items: center;
+}
+
+.profile-details-list dd {
+    font-weight: 700;
+    color: var(--color-marine-deep);
+    padding-left: 1rem; 
+}
+
+.profile-details-list dt i {
+    color: var(--color-accent-green); 
+    font-size: 1.1rem; 
+}
+
+/* Fila de Hover (¡EFECTOS MEJORADOS!) */
+.profile-details-list .row:hover {
+    background-color: #f8fcfd; 
+    border-left-color: var(--color-accent-green); 
+    /* Sombra más enfocada */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    /* Transformación más pronunciada */
+    transform: translateX(10px) scale(1.005); 
+}
+
+.profile-details-list dt:last-child,
+.profile-details-list dd:last-child {
+    border-bottom: none; 
+}
+
+
+/* ---------------------- 5. Badges (Info / Grupo Sanguíneo) - ¡VERDE AHORA! ---------------------- */
+
+.badge.bg-info {
+    /* 🟢 CAMBIO: Fondo VERDE ESMERALDA para el Grupo Sanguíneo */
+    background-color: var(--color-accent-green) !important;
+    color: var(--color-bg-white) !important; 
+    font-weight: 700 !important; 
+    padding: 0.4em 0.9em;
+    border-radius: 50px; 
+    /* Glow de Sombra ahora verde */
+    box-shadow: 0 2px 8px rgba(0, 168, 120, 0.5); 
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.badge.bg-info:hover {
+    transform: scale(1.15) rotate(0deg); /* Quitamos la rotación para ser más limpios */
+    box-shadow: 0 4px 12px rgba(0, 168, 120, 0.9);
+}
+
+
+/* ---------------------- 6. Botón de Edición (AZUL CIAN SÓLIDO con PULSO) ---------------------- */
+
+.btn-action-cyan {
+    background-color: var(--color-cian-action) !important;
+    background-image: none !important;
+    
+    border: none;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 0.8rem 2.5rem; 
+    border-radius: 50px; 
+    
+    /* Aumento de la intensidad del box-shadow */
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.8); 
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.btn-action-cyan:hover {
+    background-color: #147ad8 !important; /* Azul más oscuro en hover */
+    transform: translateY(-3px) scale(1.01);
+    
+    /* Efecto de pulso en la sombra (AZUL CIAN) */
+    box-shadow: 0 15px 35px rgba(30, 144, 255, 1); 
+    animation: shadowPulseCyan 1.5s infinite; 
+}
+
+
+/* ---------------------- 7. Responsividad (Clave para la visualización móvil) ---------------------- */
+
+@media (max-width: 992px) {
+    .h1-elegant-clean {
+        font-size: 2.8rem;
+        letter-spacing: -1px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Encabezado */
+    .h1-elegant-clean {
+        font-size: 2rem;
+    }
+    .agenda-header-clean {
+        margin-bottom: 1rem !important; 
+    }
+
+    /* Tarjeta */
+    .card-body {
+        padding: 1.2rem 0.8rem; 
+    }
+    
+    /* Lista de Detalles - Apilamiento y Reducción de Espacio */
+    .profile-details-list dt,
+    .profile-details-list dd {
+        font-size: 0.85rem; 
+        padding: 0.3rem 0;
+        border-bottom: none; 
+    }
+    
+    .profile-details-list .row {
+        margin-bottom: 8px; 
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
+        margin-left: 0; 
+        margin-right: 0;
+        padding-left: 5px; 
+    }
+
+    .profile-details-list dt {
+        padding-left: 0.5rem;
+        margin-bottom: 3px; 
+    }
+
+    .profile-details-list dd {
+        padding-left: 0.5rem;
+    }
+
+    /* Título de Sección */
+    .card-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px !important;
+    }
+    
+    /* Botón de Acción */
+    .btn-action-cyan {
+        width: 100%;
+        padding: 0.6rem 1.5rem;
+    }
+}
